@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "gen-types": "npx swagger-typescript-api -p http://localhost:3000/api-doc/json -o ./src/common/types -n api-types.ts -r --axios --extract-enums --enum-names-as-values",
+    "gen-types-test": "npx swagger-typescript-api -p https://petstore.swagger.io/v2/swagger.json -o ./src/common/types -n api-types-test.ts -r --axios",
     "dev": "next dev -p 3001",
+    "prevdev": "npm run gen-types",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +19,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
+    "react-player": "^2.16.0",
+    "swagger-typescript-api": "^13.0.22",
     "yup": "^1.4.0"
   },
   "devDependencies": {

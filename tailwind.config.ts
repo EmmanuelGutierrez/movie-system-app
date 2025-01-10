@@ -8,6 +8,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        "100": "25rem",
+        "110": "27.5rem",
+        "120": "30rem",
+        "130": "32.5rem",
+        140: "35rem",
+        150: "37.5rem",
+        160: "40rem",
+      },
+      height: {
+        "100": "25rem",
+        "110": "27.5rem",
+        "120": "30rem",
+        "130": "32.5rem",
+        140: "35rem",
+        150: "37.5rem",
+        160: "40rem",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -58,11 +76,6 @@ const config: Config = {
         borderWidth: {
           1: "1px",
           "0.5": "0.5px",
-        },
-        width: {
-          "100": "25rem",
-          "110": "27.5rem",
-          "120": "30rem",
         },
       },
     },

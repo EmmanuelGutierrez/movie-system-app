@@ -8,8 +8,8 @@ export default function RootLayout({
   return (
     <div>
       <Header />
-      <div className="h-screen w-screen">
-        <div className="">{children}</div>
+      <div className="min-h-[calc(100vh-theme(spacing.16))] min-w-full">
+        {children}
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
+import { MainBanner } from "@/app/components/MainBanner";
 import React from "react";
-import { MovieDetail } from "@/app/components/MovieDetail";
-import { Carousel } from "@/app/components/Carousel";
-import { Api } from "@/common/types/api-types";
+// import { MovieDetail } from "@/app/components/MovieDetail";
+// import { Carousel } from "@/app/components/Carousel";
+// import { Api } from "@/common/types/api-types";
+// import { MainBanner } from "@/app/components/MainBanner";
 // import ReactPlayer from "react-player";
 
 // const MovieCard = ({
@@ -73,13 +75,14 @@ import { Api } from "@/common/types/api-types";
 // );
 
 export default async function Page() {
-  const client = new Api({ baseURL: "http://localhost:3000" });
+  // const client = new Api({ baseURL: "http://localhost:3000" });
 
-  const { data } = await client.movie.movieList();
+  // const { data } = await client.movie.movieList();
   return (
-    <div className="min-h-screen bg-black text-white ">
-      <MovieDetail />
-      <Carousel movies={data.data} title="movies" />
+    <div className=" bg-black text-white ">
+      {/* <MovieDetail /> */}
+      <MainBanner/>
+      {/* <Carousel movies={data.data} title="movies" /> */}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 const Header = () => (
-  <header className="flex justify-between items-center py-4 px-6 bg-black">
+  <header  className="flex justify-between items-center py-4 px-6 bg-black">
     <div className="text-2xl font-bold text-yellow-400">4KSTAR</div>
     <nav className="hidden md:flex space-x-6">
       <a href="#" className="text-white hover:text-yellow-400">

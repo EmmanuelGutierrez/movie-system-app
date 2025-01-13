@@ -1,4 +1,5 @@
 import { MainBanner } from "@/app/components/MainBanner";
+import { Search } from "@/app/components/Search";
 import React from "react";
 // import { MovieDetail } from "@/app/components/MovieDetail";
 // import { Carousel } from "@/app/components/Carousel";
@@ -79,9 +80,10 @@ export default async function Page() {
 
   // const { data } = await client.movie.movieList();
   return (
-    <div className=" bg-black text-white ">
+    <div className=" text-white ">
       {/* <MovieDetail /> */}
       <MainBanner/>
+      <Search/>
       {/* <Carousel movies={data.data} title="movies" /> */}
     </div>
   );

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import cinemaImg from "../../media/img/cinema.jpg";
 import { TypeAnimation } from "react-type-animation";
@@ -9,18 +9,16 @@ export const MainBanner = () => {
       <Image
         src={cinemaImg}
         alt="cinema"
-        className="object-cover opacity-20 h-120"
+        className="object-cover opacity-20 h-120 "
       />
       <div
         className={`bg-cover absolute inset-0 `}
         //   style={{ backgroundImage: `url("${cinemaImg}")` }}
       >
         <div className="flex flex-col items-center center h-full justify-center text-center ">
-          <h1 className="font-bold text-7xl">
-            CONSIGUE UNA ENTRADA
-            <br />
-            PARA{" "}
-            <span className="text-colors-primary-hard">
+          <h1 className="font-bold text-4xl md:text-7xl">
+            CONSIGUE UNA ENTRADA PARA <br />
+            <span className="text-colors-primary-light">
               <TypeAnimation
                 sequence={[
                   "UNA PELICULA",
@@ -30,12 +28,12 @@ export const MainBanner = () => {
                   "UN RECUERDO",
                   1500,
                 ]}
-                speed={60}
+                speed={40}
                 repeat={Infinity}
               />
             </span>
           </h1>
-          <h3 className="font-light text-xl mt-2">
+          <h3 className="font-light text-sm md:text-xl mt-2">
             Seguro y confiable. Reserva una entrada!
           </h3>
         </div>

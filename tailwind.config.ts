@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      margin: {
+        main: "21rem",
+      },
       width: {
         100: "25rem",
         110: "27.5rem",

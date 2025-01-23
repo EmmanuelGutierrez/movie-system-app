@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer components{
+  .custom-container{
+    @apply mx-auto sm:w-140 md:w-180 lg:w-240 xl:w-290 
+  }
+}

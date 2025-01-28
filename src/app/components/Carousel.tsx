@@ -57,8 +57,12 @@ export const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
   };
 
   return (
-    <div className="md:my-8 md:mx-2 relative w-full overflow-hidden">
+    <div className="md:mb-8 md:mx-2 relative w-full overflow-hidden">
       <h1 className="text-5xl font-bold mb-4 text-white">{title}</h1>
+      <div className="w-full mb-5 flex">
+        <div className="w-28 h-[6px] bg-colors-primary-light"></div>
+        <div className="w-full h-[1px] my-auto bg-white/20"></div>
+      </div>
       <div
         className={`flex transition-transform duration-300 ease-in-out `}
         style={style}

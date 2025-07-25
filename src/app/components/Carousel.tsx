@@ -1,87 +1,112 @@
-'use client'
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Movie } from "@/common/types/api-types";
 import { CarouselCard } from "./CarouselCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselProps {
   title: string;
   movies: Movie[];
 }
 
-export const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = (direction: "left" | "right") => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const scrollAmount = carousel.offsetWidth - 100; // Adjust for peeking
-    const maxScroll = carousel.scrollWidth - carousel.offsetWidth;
-
-    let newScrollPosition =
-      direction === "left"
-        ? scrollPosition - scrollAmount
-        : scrollPosition + scrollAmount;
-
-    // Handle infinite scroll
-    if (newScrollPosition < 0) {
-      newScrollPosition = maxScroll;
-    } else if (newScrollPosition > maxScroll) {
-      newScrollPosition = 0;
-    }
-
-    carousel.scrollTo({
-      left: newScrollPosition,
-      behavior: "smooth",
-    });
-
-    setScrollPosition(newScrollPosition);
-  };
+export const Carousel: React.FC<CarouselProps> = ({ title, ...data }) => {
+  const movies = [...data.movies, ...data.movies, ...data.movies];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(3);
+  const [style, setStyle] = useState({
+    transform: `translateX(-${(currentIndex / movies.length) * 100}%)`,
+    width: `${(movies.length / slidesToShow) * 100}%`,
+  });
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const handleScrollEnd = () => {
-      setScrollPosition(carousel.scrollLeft);
+    const handleResize = () => {
+      setCurrentIndex(0);
+      if (window.innerWidth < 640) {
+        setSlidesToShow(1);
+      } else if (window.innerWidth < 1024) {
+        setSlidesToShow(2);
+      } else {
+        setSlidesToShow(3);
+      }
     };
-
-    carousel.addEventListener("scrollend", handleScrollEnd);
-
-    return () => {
-      carousel.removeEventListener("scrollend", handleScrollEnd);
-    };
+    handleResize();
+    window.addEventListener("resize", () => {
+      handleResize();
+    });
+    return window.removeEventListener("resize", () => {
+      handleResize();
+    });
   }, []);
 
+  useEffect(() => {
+    setStyle({
+      transform: `translateX(-${(currentIndex / movies.length) * 100}%)`,
+      width: `${(movies.length / slidesToShow) * 100}%`,
+    });
+  }, [currentIndex, movies.length, slidesToShow]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => {
+      const newCurrentIndex = (prev + slidesToShow) % movies.length;
+      return newCurrentIndex > movies.length - slidesToShow
+        ? movies.length - slidesToShow
+        : newCurrentIndex;
+    });
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => {
+      const newCurrentIndex =
+        (prev - slidesToShow + movies.length) % movies.length;
+        console.log("newCurrentIndex",
+          prev,
+          slidesToShow,
+          movies.length,
+          movies.length,
+          newCurrentIndex
+        );
+        return newCurrentIndex > movies.length - slidesToShow
+          ? 0
+          : newCurrentIndex;
+    });
+  };
+
   return (
-    <div className="my-8">
-      <h2 className="text-2xl font-bold mb-4 text-white">{title}</h2>
-      <div className="relative group">
+    <div className="md:mb-8 md:mx-2 relative w-full overflow-hidden">
+      <h1 className="text-5xl font-bold mb-4 text-white">{title}</h1>
+      <div className="w-full mb-5 flex">
+        <div className="w-28 h-[6px] bg-colors-primary-light"></div>
+        <div className="w-full h-[1px] my-auto bg-white/20"></div>
+      </div>
+      <div className="relative">
+        <button
+          onClick={prevSlide}
+          className="absolute h-full w-16 left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-r-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute h-full  w-16 right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-l-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
         <div
-          ref={carouselRef}
-          className="flex overflow-x-hidden scroll-smooth scr"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className={`flex transition-transform duration-300 ease-in-out `}
+          style={style}
         >
-          {movies.map((movie) => (
-            <CarouselCard movie={movie} key={`${movie._id}`} />
-          ))}
+          {movies.map((movie, i) => {
+            return (
+              <div
+                key={`${movie.id}-${i}`}
+                className={`px-2 ${slidesToShow === 1 ? "w-full" : slidesToShow === 2 ? "w-1/2" : "w-1/3"} `}
+              >
+                <CarouselCard movie={movie} key={`${movie.id}-${i}`} />
+              </div>
+            );
+          })}
         </div>
-        <button
-          onClick={() => handleScroll("left")}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button
-          onClick={() => handleScroll("right")}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          aria-label="Scroll right"
-        >
-          <ChevronRight size={24} />
-        </button>
       </div>
     </div>
   );

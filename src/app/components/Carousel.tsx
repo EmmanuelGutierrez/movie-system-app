@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Movie } from "@/common/types/api-types";
 import { CarouselCard } from "./CarouselCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselProps {
   title: string;
   movies: Movie[];
 }
 
-export const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
+export const Carousel: React.FC<CarouselProps> = ({ title, ...data }) => {
+  const movies = [...data.movies, ...data.movies, ...data.movies];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(3);
   const [style, setStyle] = useState({
@@ -45,14 +47,27 @@ export const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
 
   const nextSlide = () => {
     setCurrentIndex((prev) => {
-      return (prev + slidesToShow) % movies.length;
+      const newCurrentIndex = (prev + slidesToShow) % movies.length;
+      return newCurrentIndex > movies.length - slidesToShow
+        ? movies.length - slidesToShow
+        : newCurrentIndex;
     });
   };
 
   const prevSlide = () => {
     setCurrentIndex((prev) => {
-      console.log((prev - slidesToShow + movies.length) % movies.length);
-      return (prev - slidesToShow + movies.length) % movies.length;
+      const newCurrentIndex =
+        (prev - slidesToShow + movies.length) % movies.length;
+        console.log("newCurrentIndex",
+          prev,
+          slidesToShow,
+          movies.length,
+          movies.length,
+          newCurrentIndex
+        );
+        return newCurrentIndex > movies.length - slidesToShow
+          ? 0
+          : newCurrentIndex;
     });
   };
 
@@ -63,61 +78,36 @@ export const Carousel: React.FC<CarouselProps> = ({ title, movies }) => {
         <div className="w-28 h-[6px] bg-colors-primary-light"></div>
         <div className="w-full h-[1px] my-auto bg-white/20"></div>
       </div>
-      <div
-        className={`flex transition-transform duration-300 ease-in-out `}
-        style={style}
-      >
-        {movies.map((movie, i) => {
-          return (
-            <div
-              key={`${movie._id}-${i}`}
-              className={`px-1 ${slidesToShow === 1 ? "w-full" : slidesToShow === 2 ? "w-1/2" : "w-1/3"}`}
-            >
-              <CarouselCard movie={movie} key={`${movie._id}-${i}`} />
-            </div>
-          );
-        })}
+      <div className="relative">
+        <button
+          onClick={prevSlide}
+          className="absolute h-full w-16 left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-r-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="absolute h-full  w-16 right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-l-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+        <div
+          className={`flex transition-transform duration-300 ease-in-out `}
+          style={style}
+        >
+          {movies.map((movie, i) => {
+            return (
+              <div
+                key={`${movie.id}-${i}`}
+                className={`px-2 ${slidesToShow === 1 ? "w-full" : slidesToShow === 2 ? "w-1/2" : "w-1/3"} `}
+              >
+                <CarouselCard movie={movie} key={`${movie.id}-${i}`} />
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <button
-        onClick={() => prevSlide()}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full group-hover:opacity-100 transition-opacity duration-300"
-        aria-label="Scroll left"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </button>
-      <button
-        onClick={() => nextSlide()}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full group-hover:opacity-100 transition-opacity duration-300"
-        aria-label="Scroll right"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
-        </svg>
-      </button>
     </div>
   );
 };

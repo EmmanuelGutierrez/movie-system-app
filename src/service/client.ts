@@ -1,3 +1,4 @@
 import { Api } from "@/common/types/api-types";
 
-export const client = new Api({ baseURL: "http://localhost:3000" });
+console.log(process.env)
+export const client = new Api({ baseURL:process.env.BACKEND_URL, });

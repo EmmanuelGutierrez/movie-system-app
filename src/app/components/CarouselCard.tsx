@@ -7,6 +7,7 @@ interface CarouselCardProps {
 }
 
 export const CarouselCard = ({ movie }: CarouselCardProps) => {
+  // console.log(movie)
   return (
     <div className=" group overflow-hidden h-110 rounded-lg w-full xl:h-120 border border-colors-primary-hard transition-transform duration-300 ">
       <div className="relative h-3/4  overflow-hidden">
@@ -19,7 +20,7 @@ export const CarouselCard = ({ movie }: CarouselCardProps) => {
         />
       </div>
       <div className="p-4 max-w-full overflow-hidden">
-        <h3 className="mb-3 text-xl font-bold text-white group-hover:text-colors-primary-clear transition-all ease-in delay-75">
+        <h3 className="mb-3 text-xl font-bold text-white group-hover:text-colors-primary-clear transition-all ease-in delay-75 line-clamp-1">
           {movie.name}
         </h3>
         <p className="mb-3 text-sm font-normal text-white line-clamp-2">

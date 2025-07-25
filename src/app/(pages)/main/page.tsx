@@ -5,7 +5,7 @@ import { client } from "@/service/client";
 import React from "react";
 
 export default async function Page() {
-  const { data } = await client.movie.movieList();
+  const { data } = await client.movie.movieControllerFindAll();
   return (
     <section className=" text-white ">
       <MainContainer />

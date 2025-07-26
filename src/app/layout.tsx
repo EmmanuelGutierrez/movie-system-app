@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Source_Sans_3 } from "next/font/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -11,6 +12,12 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const sourseSans = Source_Sans_3({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-source-sans-3",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={` scrollbar-modern ${sourseSans.variable}`}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-colors-primary-dark`}
       >

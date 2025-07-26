@@ -24,10 +24,30 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+/* 
+  .scrollbar::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #ff0000;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  } */
 }
 
 @layer components{
   .custom-container{
-    @apply mx-auto sm:w-140 md:w-180 lg:w-240 xl:w-290 
+    @apply mx-auto sm:w-140 md:w-180 lg:w-240 xl:w-340
   }
 }

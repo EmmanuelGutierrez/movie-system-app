@@ -25,7 +25,7 @@ export default async function Page({
         width={2000}
       /> */}
       <div
-        className="w-full h-120 bg-cover relative before:absolute  before:w-full before:h-full before:bg-gradient-to-r before:from-colors-primary-dark before:via-transparent before:to-colors-primary-dark"
+        className="w-full h-120 bg-cover relative before:absolute  before:w-full before:h-full before:bg-linear-to-r before:from-colors-primary-dark before:via-transparent before:to-colors-primary-dark"
         style={{ backgroundImage: `url(${data.poster?.secure_url})` }}
       ></div>
       {/* <div className="relative custom-container mt-16 ">

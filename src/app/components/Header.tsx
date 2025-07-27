@@ -100,7 +100,7 @@ export const Header = () => {
       </header>
       <div
         ref={stickyHeaderRef}
-        className={`fixed top-0 left-0 right-0 bg-black text-white py-4 px-6 transition-all duration-300 z-[1000] ${
+        className={`fixed top-0 left-0 right-0 bg-black text-white py-4 px-6 transition-all duration-300 z-1000 ${
           isSticky ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
         }`}
         // style={{ zIndex: 1000 }}

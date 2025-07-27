@@ -33,7 +33,7 @@ export const Button = ({
           : textColor !== "text-white"
             ? "text-white  hover:text-colors-black"
             : "text-black hover:text-colors-white",
-        " transition-all ease-in duration-75 relative inline-flex items-center justify-center focus:ring-1  overflow-hidden focus:ring-blue-300 font-medium text-sm  focus:outline-none ",
+        " transition-all ease-in duration-75 relative inline-flex items-center justify-center focus:ring-1  overflow-hidden focus:ring-blue-300 font-medium text-sm  focus:outline-hidden ",
         rounded ? "rounded-full" : "rounded-lg",
         outline ? "group px-1 py-1" : "px-5 py-2 hover:bg-opacity-80 ",
         color ? `${bgColors[color]} ` : "bg-colors-primary ",

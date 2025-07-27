@@ -20,12 +20,12 @@ export const MovieDetail = () => (
           </div>
           <p className="mb-2">1950 • 1 HR 56 MIN</p>
           <div className="flex space-x-2 mb-4">
-            <span className="px-2 py-1 bg-colors-primary-light rounded text-xs">
+            <span className="px-2 py-1 bg-colors-primary-light rounded-sm text-xs">
               R
             </span>
-            <span className="px-2 py-1 bg-gray-600 rounded text-xs">4K</span>
-            <span className="px-2 py-1 bg-gray-600 rounded text-xs">HD</span>
-            <span className="px-2 py-1 bg-gray-600 rounded text-xs">16+</span>
+            <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">4K</span>
+            <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">HD</span>
+            <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">16+</span>
           </div>
           <p className="mb-4 ">
             In the Falangist Spain of 1944, the bookish young stepdaughter of a

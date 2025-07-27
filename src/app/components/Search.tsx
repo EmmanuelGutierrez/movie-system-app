@@ -3,7 +3,7 @@ import { Input } from "./common/Input";
 
 export const Search = () => {
   return (
-    <div className="custom-container bg-gradient-to-r from-colors-primary-hard to-colors-secondary-clear  -mt-10  relative px-8 flex flex-col justify-between">
+    <div className="custom-container bg-linear-to-r from-colors-primary-hard to-colors-secondary-clear  -mt-10  relative px-8 flex flex-col justify-between">
       <div className="mt-8">
         <h3 className="text-xl font-bold text-colors-primary-clear ml-6">
           Bienvenido a 4KSTAR

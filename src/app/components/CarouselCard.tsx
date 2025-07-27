@@ -14,7 +14,7 @@ export const CarouselCard = ({ movie }: CarouselCardProps) => {
         <Image
           src={movie.poster ? movie.poster?.secure_url : NoImage}
           alt={movie.name}
-          className="w-auto object-cover h-full rounded group-hover:scale-110 transition-transform duration-300"
+          className="w-auto object-cover h-full rounded-sm group-hover:scale-110 transition-transform duration-300"
           height={800}
           width={1000}
         />

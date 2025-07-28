@@ -1,3 +1,4 @@
+import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 
 export default function RootLayout({
@@ -11,6 +12,7 @@ export default function RootLayout({
       <div className="min-h-[calc(100vh-(--spacing(16)))] min-w-full">
         {children}
       </div>
+      <Footer/>
     </div>
   );
 }

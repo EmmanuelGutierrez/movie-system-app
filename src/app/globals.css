@@ -203,7 +203,10 @@
 }
 
 @utility custom-container {
-  @apply mx-auto sm:w-140 md:w-180 lg:w-240 xl:w-340;
+  @apply mx-auto w-140 md:w-180 lg:w-240 xl:w-340 max-w-full;
+}
+@utility custom-container-md {
+  @apply mx-auto w-140 md:w-180 lg:w-100 xl:w-190 max-w-full;
 }
 
 @layer utilities {

@@ -1,6 +1,8 @@
+'use client'
 import { Movie } from "@/common/types/api-types";
 import Image from "next/image";
 import NoImage from '../../media/img/no-picture-available-icon-0.jpg'
+import { useRouter } from "next/navigation";
 
 interface CarouselCardProps {
   movie: Movie;
@@ -8,13 +10,17 @@ interface CarouselCardProps {
 
 export const CarouselCard = ({ movie }: CarouselCardProps) => {
   // console.log(movie)
+  const router=useRouter()
   return (
-    <div className=" group overflow-hidden h-110 rounded-lg w-full xl:h-120 border border-colors-primary-hard transition-transform duration-300 ">
+    <div
+      onClick={() => router.push(`/detail/${movie.id}`)}
+      className="cursor-pointer group overflow-hidden h-110 rounded-lg w-full xl:h-120 border border-colors-primary-hard transition-transform duration-300 "
+    >
       <div className="relative h-3/4  overflow-hidden">
         <Image
           src={movie.poster ? movie.poster?.secure_url : NoImage}
           alt={movie.name}
-          className="w-auto object-cover h-full rounded-sm group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-full object-cover rounded-sm group-hover:scale-110 transition-transform duration-300"
           height={800}
           width={1000}
         />

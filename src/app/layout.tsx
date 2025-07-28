@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={` scrollbar-modern ${sourseSans.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-colors-primary-dark`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans text-white antialiased bg-gradient-to-t from-colors-primary-hard to-colors-primary-dark font-medium`}
       >
         {children}
       </body>

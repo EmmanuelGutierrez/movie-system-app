@@ -33,15 +33,15 @@ export const Button = ({
           : textColor !== "text-white"
             ? "text-white  hover:text-colors-black"
             : "text-black hover:text-colors-white",
-        " transition-all ease-in duration-75 relative inline-flex items-center justify-center focus:ring-1  overflow-hidden focus:ring-blue-300 font-medium text-sm  focus:outline-hidden ",
+        "font-medium transition-all ease-in duration-75 relative inline-flex items-center justify-center focus:ring-1  overflow-hidden focus:ring-blue-300 text-lg  focus:outline-hidden cursor-pointer",
         rounded ? "rounded-full" : "rounded-lg",
         outline ? "group px-1 py-1" : "px-5 py-2 hover:bg-opacity-80 ",
-        color ? `${bgColors[color]} ` : "bg-colors-primary ",
+        color ? `${bgColors[color]}  ` : "hover:bg-colors-primary/80 ",
         fontWeightEnum[fontWeight],
         classNameButton
       )}
     >
-      {outline && (
+      {outline && ( 
         <span
           className={twMerge(
             rounded ? "rounded-full" : "rounded-md",

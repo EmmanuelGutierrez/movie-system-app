@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { File } from "@/common/types/api-types";
 
 interface ImageCarouselProps {
-  images: string[];
+  images: File[];
   maxVisible?: number;
   autoPlay?: boolean;
   autoPlayInterval?: number;
@@ -27,7 +28,6 @@ export default function ImageCarousel({
     // setIsTransitioning(true);
     setCurrentIndex((prev) => {
       const newIndex = prev >= maxIndex ? 0 : prev + 1;
-      console.log("curent index", newIndex, maxIndex);
       return newIndex;
     });
     // setTimeout(() => setIsTransitioning(false), 500);
@@ -98,7 +98,7 @@ export default function ImageCarousel({
                   <Image
                     height={500}
                     width={500}
-                    src={image || "/placeholder.svg"}
+                    src={image.secure_url || "/placeholder.svg"}
                     alt={`Imagen ${index + 1}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"

@@ -1,10 +1,10 @@
 
 import Image from "next/image";
-import Instagram from "../../media/social/instagram-svgrepo-com.svg";
-import Github from "../../media/social/github-142-svgrepo-com.svg";
-import Linkedin from "../../media/social/linkedin-svgrepo-com.svg";
-import { Input } from "./common/Input";
-import { Button } from "./common/Button";
+import Instagram from "../../../media/social/instagram-svgrepo-com.svg";
+import Github from "../../../media/social/github-142-svgrepo-com.svg";
+import Linkedin from "../../../media/social/linkedin-svgrepo-com.svg";
+import { Input } from "./Input";
+import { Button } from "./Button";
 import { Logo } from "./Logo";
 
 export const Footer = () => {

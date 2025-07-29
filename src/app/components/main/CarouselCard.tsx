@@ -1,7 +1,7 @@
 'use client'
 import { Movie } from "@/common/types/api-types";
 import Image from "next/image";
-import NoImage from '../../media/img/no-picture-available-icon-0.jpg'
+import NoImage from '../../../media/img/no-picture-available-icon-0.jpg'
 import { useRouter } from "next/navigation";
 
 interface CarouselCardProps {

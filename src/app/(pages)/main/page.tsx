@@ -1,5 +1,5 @@
-import { Carousel } from "@/app/components/Carousel";
-import { List } from "@/app/components/List";
+import { Carousel } from "@/app/components/main/Carousel";
+import { List } from "@/app/components/main/List";
 import { MainContainer } from "@/app/containers/MainContainer";
 import { client } from "@/service/client";
 import React from "react";

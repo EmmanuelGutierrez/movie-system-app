@@ -1,33 +1,230 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(-font-source-sans-3), sans-serif;
+
+  --margin-main: 21rem;
+
+  --width-100: 25rem;
+  --width-110: 27.5rem;
+  --width-120: 30rem;
+  --width-130: 32.5rem;
+  --width-140: 35rem;
+  --width-150: 37.5rem;
+  --width-160: 40rem;
+  --width-170: 42.5rem;
+  --width-180: 45rem;
+  --width-190: 47.5rem;
+  --width-200: 50rem;
+  --width-210: 52.5rem;
+  --width-220: 55rem;
+  --width-230: 57.5rem;
+  --width-240: 60rem;
+  --width-250: 62.5rem;
+  --width-260: 65rem;
+  --width-270: 67.5rem;
+  --width-280: 70rem;
+  --width-290: 72.5rem;
+  --width-300: 75rem;
+  --width-310: 77.5rem;
+  --width-320: 80rem;
+  --width-330: 82.5rem;
+  --width-340: 85rem;
+  --width-350: 87.5rem;
+  --width-360: 90rem;
+  --width-370: 92.5rem;
+  --width-380: 95rem;
+
+  --container-100: 25rem;
+  --container-110: 27.5rem;
+  --container-120: 30rem;
+  --container-130: 32.5rem;
+  --container-140: 35rem;
+  --container-150: 37.5rem;
+  --container-160: 40rem;
+  --container-170: 42.5rem;
+  --container-180: 45rem;
+  --container-190: 47.5rem;
+  --container-200: 50rem;
+  --container-210: 52.5rem;
+  --container-220: 55rem;
+  --container-230: 57.5rem;
+  --container-240: 60rem;
+  --container-250: 62.5rem;
+  --container-260: 65rem;
+  --container-270: 67.5rem;
+  --container-280: 70rem;
+  --container-290: 72.5rem;
+  --container-300: 75rem;
+  --container-310: 77.5rem;
+  --container-320: 80rem;
+  --container-330: 82.5rem;
+  --container-340: 85rem;
+  --container-350: 87.5rem;
+  --container-360: 90rem;
+  --container-370: 92.5rem;
+  --container-380: 95rem;
+
+  --height-100: 25rem;
+  --height-110: 27.5rem;
+  --height-120: 30rem;
+  --height-130: 32.5rem;
+  --height-140: 35rem;
+  --height-150: 37.5rem;
+  --height-160: 40rem;
+  --height-170: 42.5rem;
+  --height-180: 45rem;
+  --height-190: 47.5rem;
+  --height-200: 50rem;
+  --height-210: 52.5rem;
+  --height-220: 55rem;
+  --height-230: 57.5rem;
+  --height-240: 60rem;
+  --height-250: 62.5rem;
+  --height-260: 65rem;
+  --height-270: 67.5rem;
+  --height-280: 70rem;
+  --height-290: 72.5rem;
+  --height-300: 75rem;
+  --height-310: 77.5rem;
+  --height-320: 80rem;
+  --height-330: 82.5rem;
+  --height-340: 85rem;
+  --height-350: 87.5rem;
+  --height-360: 90rem;
+  --height-370: 92.5rem;
+  --height-380: 95rem;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-spacing-100: 25rem;
+  --color-spacing-110: 27.5rem;
+  --color-spacing-120: 30rem;
+  --color-spacing-130: 32.5rem;
+  --color-spacing-140: 35rem;
+  --color-spacing-150: 37.5rem;
+  --color-spacing-160: 40rem;
+  --color-spacing-170: 42.5rem;
+  --color-spacing-180: 45rem;
+  --color-spacing-190: 47.5rem;
+  --color-spacing-200: 50rem;
+  --color-spacing-210: 52.5rem;
+  --color-spacing-220: 55rem;
+  --color-spacing-230: 57.5rem;
+  --color-spacing-240: 60rem;
+  --color-spacing-250: 62.5rem;
+  --color-spacing-260: 65rem;
+  --color-spacing-270: 67.5rem;
+  --color-spacing-280: 70rem;
+  --color-spacing-290: 72.5rem;
+  --color-spacing-300: 75rem;
+  --color-spacing-310: 77.5rem;
+  --color-spacing-320: 80rem;
+  --color-spacing-330: 82.5rem;
+  --color-spacing-340: 85rem;
+  --color-spacing-350: 87.5rem;
+  --color-spacing-360: 90rem;
+  --color-spacing-370: 92.5rem;
+  --color-spacing-380: 95rem;
+
+  --color-colors-primary: #006dac;
+  --color-colors-primary-hard: #00458b;
+  --color-colors-primary-light: #0095bc;
+  --color-colors-primary-dark: #0a1e5e;
+  --color-colors-primary-clear: #00bcbd;
+
+  --color-colors-secondary: #5250a5;
+  --color-colors-secondary-hard: #75296f;
+  --color-colors-secondary-light: #ab5ca3;
+  --color-colors-secondary-clear: #6103b6;
+
+  --color-colors-white: #ffffff;
+  --color-colors-white-dark: #f4f5f7;
+
+  --color-colors-black: #000000;
+  --color-colors-black-light: #383a45;
+  --color-colors-black-dark: #262626;
+
+  --color-colors-gray: #333333;
+  --color-colors-gray-dark: #1a1a1a;
+  --color-colors-gray-light: #d7d7d7;
+
+  --color-colors-danger: #dc3545;
+  --color-colors-danger-light: #dc143c;
+
+  --color-colors-success: #28a745;
+  --color-colors-success-light: #2ecc71;
+
+  --color-border-width-1: 1px;
+  --color-border-width-0_5: 0.5px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@utility text-balance {
+  text-wrap: balance;
+  /* 
+  .scrollbar::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #ff0000;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  } */
+}
+
+@utility custom-container {
+  @apply mx-auto w-140 md:w-180 lg:w-240 xl:w-340 max-w-full;
+}
+@utility custom-container-md {
+  @apply mx-auto w-140 md:w-180 lg:w-100 xl:w-190 max-w-full;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
   }
-}
 
-@layer components{
-  .custom-container{
-    @apply mx-auto sm:w-140 md:w-180 lg:w-240 xl:w-290 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
   }
 }

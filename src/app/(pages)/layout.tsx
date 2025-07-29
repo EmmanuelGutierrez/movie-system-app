@@ -1,4 +1,5 @@
-import { Header } from "../components/Header";
+import { Footer } from "../components/common/Footer";
+import { Header } from "../components/common/Header";
 
 export default function RootLayout({
   children,
@@ -8,9 +9,10 @@ export default function RootLayout({
   return (
     <div>
       <Header />
-      <div className="min-h-[calc(100vh-theme(spacing.16))] min-w-full">
+      <div className="min-h-[calc(100vh-(--spacing(80)))] min-w-full">
         {children}
       </div>
+      <Footer/>
     </div>
   );
 }

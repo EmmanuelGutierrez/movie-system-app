@@ -50,10 +50,10 @@ const HeroSection = () => (
         <h1 className="text-6xl font-bold mb-2">PANS LABYRINTH</h1>
         <p className="mb-2">1950 • 1 HR 56 MIN</p>
         <div className="flex space-x-2 mb-4">
-          <span className="px-2 py-1 bg-yellow-600 rounded text-xs">R</span>
-          <span className="px-2 py-1 bg-gray-600 rounded text-xs">4K</span>
-          <span className="px-2 py-1 bg-gray-600 rounded text-xs">HD</span>
-          <span className="px-2 py-1 bg-gray-600 rounded text-xs">16+</span>
+          <span className="px-2 py-1 bg-yellow-600 rounded-sm text-xs">R</span>
+          <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">4K</span>
+          <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">HD</span>
+          <span className="px-2 py-1 bg-gray-600 rounded-sm text-xs">16+</span>
         </div>
         <p className="mb-4 max-w-lg">
           In the Falangist Spain of 1944, the bookish young stepdaughter of a
@@ -117,7 +117,7 @@ const MovieCard = ({
     <img
       src="/placeholder.svg?height=200&width=300"
       alt={title}
-      className="w-full h-40 object-cover rounded"
+      className="w-full h-40 object-cover rounded-sm"
     />
     <div className="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-75 text-white">
       <div className="flex justify-between items-center">

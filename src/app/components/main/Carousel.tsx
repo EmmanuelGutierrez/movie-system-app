@@ -76,19 +76,19 @@ export const Carousel: React.FC<CarouselProps> = ({ title, ...data }) => {
       <h1 className="text-5xl font-bold mb-4 text-white">{title}</h1>
       <div className="w-full mb-5 flex">
         <div className="w-28 h-[6px] bg-colors-primary-light"></div>
-        <div className="w-full h-[1px] my-auto bg-white/20"></div>
+        <div className="w-full h-px my-auto bg-white/20"></div>
       </div>
       <div className="relative">
         <button
           onClick={prevSlide}
-          className="absolute h-full w-16 left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-r-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+          className="absolute h-full w-16 left-0 top-1/2 -translate-y-1/2 z-10 bg-linear-to-r rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-r-lg transition-all duration-300 ease-in-out disabled:opacity-30"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute h-full  w-16 right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-l-lg transition-all duration-300 ease-in-out disabled:opacity-30"
+          className="absolute h-full  w-16 right-0 top-1/2 -translate-y-1/2 z-10 bg-linear-to-l rounded-lg from-black/50 to-transparent hover:from-black/70 hover:via-black/50  text-white p-2 rounded-l-lg transition-all duration-300 ease-in-out disabled:opacity-30"
         >
           <ChevronRight className="w-6 h-6" />
         </button>

@@ -8,9 +8,18 @@ export default async function Page({
 }) {
   // const { id } = useParams();
   const { id } = await params;
-  const { data } = await client.movie.movieControllerFindOne(Number(id));
-  if (!data) {
+  const movieRes = await client.movie.movieControllerFindOne(Number(id));
+  const screeningsRes =
+    await client.screening.screeningControllerScreeningsAvailableByMovie(
+      Number(id)
+    );
+  if (!movieRes.data) {
     return <>Not found</>;
   }
-  return <MovieDetailContainer data={data} />;
+  return (
+    <MovieDetailContainer
+      movie={movieRes.data}
+      screenings={screeningsRes.data}
+    />
+  );
 }

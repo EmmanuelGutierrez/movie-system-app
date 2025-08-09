@@ -1,33 +1,28 @@
 
 import Image from "next/image";
-import Instagram from "../../../media/social/instagram-svgrepo-com.svg";
-import Github from "../../../media/social/github-142-svgrepo-com.svg";
-import Linkedin from "../../../media/social/linkedin-svgrepo-com.svg";
+import Instagram from "../../media/social/instagram-svgrepo-com.svg";
+import Github from "../../media/social/github-142-svgrepo-com.svg";
+import Linkedin from "../../media/social/linkedin-svgrepo-com.svg";
 import { Input } from "./Input";
-import { Button } from "./Button";
 import { Logo } from "./Logo";
+import { Button } from "../ui/button";
 
 export const Footer = () => {
   return (
     <footer>
-      <div className="w-full h-64 bg-gradient-to-r from-transparent via-colors-secondary to-transparent">
-        <div className=" flex items-center justify-center h-full">
-          <h2 className="text-3xl w-130 text-center">
+      <div className="w-full max-w-screen h-64 bg-gradient-to-r from-transparent via-colors-secondary to-transparent">
+        <div className=" flex flex-col gap-7 lg:flex-row mx-5 items-center justify-center h-full">
+          <h2 className="text-xl lg:text-3xl text-center">
             Disfruta de beneficios y mantente al tanto de las novedades!!
           </h2>
-          <div className="flex content-center ml-10">
+          <div className="flex justify-center items-center gap-2 ml-10">
             <Input
               type="text"
-              placeholder="Direccion de correo electronico"
-              classContainer="w-80"
+              placeholder="Correo electronico"
+              classContainer="w-50 lg:w-80"
               color="primary"
             />
-            <Button
-              color="primary"
-              text="Enviar"
-              fontWeight="light"
-              classNameButton=" h-10 self-center -ml-10 "
-            />
+            <Button >Enviar</Button>
           </div>
         </div>
       </div>

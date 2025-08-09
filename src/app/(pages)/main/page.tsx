@@ -1,11 +1,21 @@
-import { Carousel } from "@/app/components/main/Carousel";
-import { List } from "@/app/components/main/List";
+import { Carousel } from "@/components/main/Carousel";
+import { List } from "@/components/main/List";
 import { MainContainer } from "@/app/containers/MainContainer";
+// import { useMovieStore } from "@/app/hooks/useMovieStore";
 import { client } from "@/service/client";
 import React from "react";
 
 export default async function Page() {
   const { data } = await client.movie.movieControllerFindAll();
+  // const data={data:[]}
+  // const data = await fetch("http://localhost:3000/movie?limit=11", {
+  //   method: "GET",
+  //   credentials: "include", }).then((data)=>data.json()).then((data)=>{return data});
+  // console.log(data);
+  // const setMovies = useMovieStore((store) => store.setMovies);
+  // if(data){
+  //   setMovies(data.data);
+  // }
   return (
     <section className=" text-white ">
       <MainContainer />

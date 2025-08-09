@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import cinemaImg from "../../../media/img/cinema.jpg";
+import cinemaImg from "../../media/img/cinema.jpg";
 import { TypeAnimation } from "react-type-animation";
 
 export const MainBanner = () => {

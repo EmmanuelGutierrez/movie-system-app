@@ -310,7 +310,6 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   public setSecurityData = (data: SecurityDataType | null) => {
-    console.log("data")
     this.securityData = data;
   };
 
@@ -876,11 +875,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Screening
-     * @name ScreeningControllerScreeningAvailable
+     * @name ScreeningControllerScreeningsAvailableByMovie
      * @request GET:/screening/screening-available/{id}
      * @response `200` `(Screening)[]`
      */
-    screeningControllerScreeningAvailable: (id: number, params: RequestParams = {}) =>
+    screeningControllerScreeningsAvailableByMovie: (id: number, params: RequestParams = {}) =>
       this.request<Screening[], any>({
         path: `/screening/screening-available/${id}`,
         method: "GET",

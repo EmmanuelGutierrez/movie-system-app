@@ -1,8 +1,9 @@
-import { Movie } from "@/common/types/api-types";
+import { Movie, Screening } from "@/common/types/api-types";
 import { PersonList } from "./PersonList";
 import ImageCarousel from "./ImageCarousel";
+import ScreeningDisplay from "./ScreeningsDisplay";
 
-export const DetailList = ({ movie }: { movie: Movie }) => {
+export const DetailList = ({ movie,screenings }: { movie: Movie,screenings:Screening[] }) => {
   return (
     <>
       <div className="">
@@ -10,6 +11,12 @@ export const DetailList = ({ movie }: { movie: Movie }) => {
           <h3 className="text-4xl font-bold ml-4">Sinopsis</h3>
         </div>
         <p>{movie.description}</p>
+      </div>
+      <div className="">
+        <div className="border-t-1 border-b-1 border-colors-primary-light my-8 py-4 relative before:absolute before:-top-0.5 before:left-0 before:w-50 before:h-1 before:bg-colors-primary-clear after:absolute after:-bottom-0.5 after:left-0 after:w-50 after:h-1 after:bg-colors-primary-clear">
+          <h3 className="text-4xl font-bold ml-4">Reserva</h3>
+        </div>
+        <ScreeningDisplay screenings={screenings} />
       </div>
       <div className="">
         <div className="border-t-1 border-b-1 border-colors-primary-light my-8 py-4 relative before:absolute before:-top-0.5 before:left-0 before:w-50 before:h-1 before:bg-colors-primary-clear after:absolute after:-bottom-0.5 after:left-0 after:w-50 after:h-1 after:bg-colors-primary-clear">

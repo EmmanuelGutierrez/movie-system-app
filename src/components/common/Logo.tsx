@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LogoPng from '../../../media/logo/logo.png'
+import LogoPng from '../../media/logo/logo.png'
 import Link from "next/link";
 
 export const Logo=()=>{

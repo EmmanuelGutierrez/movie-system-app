@@ -1,15 +1,14 @@
 "use client";
 
-import { Search, ShoppingCart, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Logo } from "./Logo";
+import { Logo } from "../../../components/common/Logo";
+import { UserAvatar } from "@/components/header/UserAvatar";
 
 export const Header = () => {
   // const [isVisible, setIsVisible] = useState(true);
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const stickyHeaderRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const headerObserver = new IntersectionObserver(
       ([entry]) => {
@@ -32,28 +31,18 @@ export const Header = () => {
 
   const headerContent = (
     <>
-      <Logo/>
-      {/* <nav className="hidden md:flex space-x-6">
-        <a href="#" className="text-white hover:text-text-colors-primary">
-          HOME
-        </a>
-        <a href="#" className="text-white hover:text-text-colors-primary">
-          MOVIE
-        </a>
-        <a href="#" className="text-white hover:text-text-colors-primary">
-          TV SHOWS
-        </a>
-        <a href="#" className="text-white hover:text-text-colors-primary">
-          WEB SERIES
-        </a>
-        <a href="#" className="text-white hover:text-text-colors-primary">
-          PAGES
-        </a>
-      </nav> */}
+      <Logo />
       <div className="flex items-center space-x-4">
-        <Search className="w-5 h-5 text-white" />
-        <User className="w-5 h-5 text-white" />
-        <ShoppingCart className="w-5 h-5 text-white" />
+        {/* <Search className="w-5 h-5 text-white" /> */}
+        {/* <Button
+          disabled={!appStore}
+          onClick={appStore ? appStore.toggleShowLoginForm : () => {}}
+          className="bg-transparent cursor-pointer"
+        >
+          <User className="w-5 h-5 text-white" />
+        </Button> */}
+        <UserAvatar />
+        {/* <ShoppingCart className="w-5 h-5 text-white" /> */}
       </div>
     </>
   );

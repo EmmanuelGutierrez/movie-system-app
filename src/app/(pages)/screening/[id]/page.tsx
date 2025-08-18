@@ -3,7 +3,7 @@
 import {
   SeatReservation,
 } from "@/common/types/api-types";
-import { SeatRow } from "@/components/screening/SeatRow";
+import { SeatRow } from "@/app/containers/screening/SeatRow";
 import { Button } from "@/components/ui/button";
 import { client } from "@/service/client";
 import { useEffect, useState } from "react";
@@ -13,8 +13,8 @@ export default function CinemaSeatingSystem() {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
 
   const getSeats = async () => {
-    const data = await client.screening.screeningControllerFindOneSeat(3);
-    setSeats(data.data);
+    const data = await client.screening.screeningControllerFindOne(3);
+    setSeats(data.data.seatReservations);
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function CinemaSeatingSystem() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-8">
+    <div className="min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
         <h1 className="text-4xl font-bold text-white text-center mb-12">
@@ -56,7 +56,7 @@ export default function CinemaSeatingSystem() {
               onSeatClick={handleSeatClick}
             />
           ))} */}
-          {Array.from(new Set(seats.map((seat) => seat.seat.row)))
+          {Array.from(new Set(seats.map((seat) => {console.log(seat); return seat.seat.row;})))
             .sort()
             .map((row) => (
               <SeatRow

@@ -1,5 +1,5 @@
 import { SeatReservation } from "@/common/types/api-types";
-import { SeatButton } from "./SeatButton";
+import { SeatButton } from "../../../components/screening/SeatButton";
 
 interface SeatRowProps {
   row: number;

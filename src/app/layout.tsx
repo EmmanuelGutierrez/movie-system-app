@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Source_Sans_3 } from "next/font/google";
+import { DrawerUser } from "@/components/common/DrawerUser";
+import { HydrationProvider } from "@/providers/hydration-provider";
+// import { AuthGuard } from "./containers/common/AuthGuard";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,9 +36,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={` scrollbar-modern ${sourseSans.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans text-white antialiased bg-gradient-to-t from-colors-primary-hard to-colors-primary-dark font-medium`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans text-white antialiased bg-colors-primary-hard font-medium`}
       >
-       {children}
+        <HydrationProvider>
+          <DrawerUser />
+          {/* <AuthGuard  fallback={<><p>...cargando auth</p></>}> */}
+            
+          {children}
+          {/* </AuthGuard> */}
+        </HydrationProvider>
       </body>
     </html>
   );

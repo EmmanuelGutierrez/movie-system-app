@@ -423,6 +423,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerCreate
      * @request POST:/user
+     * @secure
      * @response `201` `User`
      */
     userControllerCreate: (data: CreateUserDto, params: RequestParams = {}) =>
@@ -430,6 +431,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/user`,
         method: "POST",
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -441,12 +443,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerFindAll
      * @request GET:/user
+     * @secure
      * @response `200` `(User)[]`
      */
     userControllerFindAll: (params: RequestParams = {}) =>
       this.request<User[], any>({
         path: `/user`,
         method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name UserControllerMe
+     * @request GET:/user/me
+     * @secure
+     * @response `200` `User`
+     */
+    userControllerMe: (params: RequestParams = {}) =>
+      this.request<User, any>({
+        path: `/user/me`,
+        method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),
@@ -457,12 +479,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerFindOne
      * @request GET:/user/{id}
+     * @secure
      * @response `200` `User`
      */
     userControllerFindOne: (id: number, params: RequestParams = {}) =>
       this.request<User, any>({
         path: `/user/${id}`,
         method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),

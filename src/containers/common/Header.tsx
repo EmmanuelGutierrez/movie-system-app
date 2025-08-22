@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Logo } from "../../../components/common/Logo";
+import { Logo } from "../../components/common/Logo";
 import { UserAvatar } from "@/components/header/UserAvatar";
 
 export const Header = () => {

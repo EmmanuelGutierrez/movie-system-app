@@ -1,10 +1,10 @@
 import { Calendar, Clock } from "lucide-react";
-import { DetailList } from "../../../components/detail/DetailList";
+import { DetailList } from "../../components/detail/DetailList";
 import { timestampToDate } from "@/common/utils/timestampToDate";
 import Image from "next/image";
 import { Movie, Screening } from "@/common/types/api-types";
 
-import NoImage from "../../../media/img/no-picture-available-icon-0.jpg";
+import NoImage from "../../media/img/no-picture-available-icon-0.jpg";
 
 export const MovieDetailContainer = ({
   movie,screenings

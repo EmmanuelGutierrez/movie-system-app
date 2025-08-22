@@ -68,8 +68,9 @@ export default function ScreeningDisplay({
     if (appStore && authStore) {
       if (authStore.user) {
         router.push(`/screening/${screeningId}`);
+      } else {
+        appStore.toggleShowLoginForm();
       }
-      appStore.toggleShowLoginForm();
     }
     return;
   };

@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Source_Sans_3 } from "next/font/google";
 import { DrawerUser } from "@/components/common/DrawerUser";
-import { HydrationProvider } from "@/providers/hydration-provider";
+import { HydrationLoader } from "@/providers/hydration-loader";
+import RservationWatcher from "@/containers/reservation-watcher/ReservationWatcher";
 // import { AuthGuard } from "./containers/common/AuthGuard";
 
 const geistSans = localFont({
@@ -38,13 +39,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans text-white antialiased bg-colors-primary-hard font-medium`}
       >
-        <HydrationProvider>
+        <HydrationLoader>
           <DrawerUser />
+          <RservationWatcher/>
           {/* <AuthGuard  fallback={<><p>...cargando auth</p></>}> */}
             
           {children}
           {/* </AuthGuard> */}
-        </HydrationProvider>
+        </HydrationLoader>
       </body>
     </html>
   );

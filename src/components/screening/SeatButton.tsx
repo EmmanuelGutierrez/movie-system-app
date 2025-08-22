@@ -1,11 +1,12 @@
 import {
   SeatReservation,
+  SeatReservationIdDto,
   SeatReservationStatusEnum,
 } from "@/common/types/api-types";
 
 interface SeatButtonProps {
   seat: SeatReservation;
-  onClick: (seatId: number) => void;
+  onClick: (seat: SeatReservationIdDto) => void;
   isSelected: boolean;
 }
 export function SeatButton({ seat, onClick, isSelected }: SeatButtonProps) {
@@ -28,7 +29,7 @@ export function SeatButton({ seat, onClick, isSelected }: SeatButtonProps) {
 
   return (
     <button
-      onClick={() => isClickable && onClick(seat.id)}
+      onClick={() => isClickable && onClick({ seatReservationId: seat.id })}
       disabled={seat.status === "occupied"}
       className={`
         w-10 h-10 rounded border-2 transition-all duration-200 text-xs font-semibold text-white

@@ -49,6 +49,8 @@ export interface Movie {
   name: string;
   trailer_youtube_id: string;
   description: string;
+  details: string;
+  language: string;
   genres: Genre[];
   actors?: Person[];
   directors?: Person[];
@@ -156,6 +158,8 @@ export interface CreateMoviePhotosDto {
   name: string;
   trailer_url: string;
   description: string;
+  language: string;
+  detail: string;
   duration: number;
   release: number;
   directors?: string[];
@@ -191,9 +195,13 @@ export interface UpdateSeatDto {
   status: UpdateSeatDtoStatusEnum;
 }
 
+export interface SeatReservationIdDto {
+  seatReservationId: number;
+}
+
 export interface SeatReserveDto {
   /** @minItems 1 */
-  seatReserve: SeatReservation[];
+  seatReserve: SeatReservationIdDto[];
   screeningId: number;
   temporalTransactionId: string;
 }

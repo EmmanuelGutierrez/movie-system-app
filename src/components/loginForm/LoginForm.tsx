@@ -54,7 +54,7 @@ export const LoginForm = ({
   useEffect(() => {
     if (state.user && authStore && appStore) {
       appStore.toggleShowLoginForm();
-      authStore.setUser(state.user);
+      authStore.login(state.user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user]);
@@ -69,7 +69,7 @@ export const LoginForm = ({
           Ingresa tu email a continuación para iniciar sesión en tu cuenta
         </p> */}
       </div>
-      <div className="mt-6">
+      <div className="">
         <form action={formAction} className="space-y-4">
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm font-medium ">

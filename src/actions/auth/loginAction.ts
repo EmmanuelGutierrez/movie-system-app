@@ -1,5 +1,6 @@
 "use server";
 
+import { COOKIE_AGE } from "@/common/constants/timeConstants";
 import { User } from "@/common/types/api-types";
 import { client } from "@/service/client";
 import { cookies } from "next/headers";
@@ -36,7 +37,7 @@ export async function loginAction(
         name: "auth_token",
         value: token,
         httpOnly: true,
-        maxAge: 60,
+        maxAge: COOKIE_AGE,
       });
       const dataUser = await client.user.userControllerMe({
         headers: { Cookie: `auth_token=${token}` },

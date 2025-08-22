@@ -1,11 +1,11 @@
-import { SeatReservation } from "@/common/types/api-types";
-import { SeatButton } from "../../../components/screening/SeatButton";
+import { SeatReservation, SeatReservationIdDto } from "@/common/types/api-types";
+import { SeatButton } from "../../components/screening/SeatButton";
 
 interface SeatRowProps {
   row: number;
   seats: SeatReservation[];
-  onSeatClick: (seatId: number) => void;
-  selectedSeats: number[];
+  onSeatClick: (seat: SeatReservationIdDto) => void;
+  selectedSeats: SeatReservationIdDto[];
 }
 
 export function SeatRow({ row, seats, onSeatClick, selectedSeats }: SeatRowProps) {
@@ -21,7 +21,7 @@ export function SeatRow({ row, seats, onSeatClick, selectedSeats }: SeatRowProps
             key={seat.id}
             seat={seat}
             onClick={onSeatClick}
-            isSelected={selectedSeats.includes(seat.id)}
+            isSelected={selectedSeats.some(s=>s.seatReservationId===seat.id)}
           />
         ))}
       </div>

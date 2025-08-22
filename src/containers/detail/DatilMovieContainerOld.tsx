@@ -1,8 +1,8 @@
 import { Movie } from "@/common/types/api-types";
-import ImageCarousel from "../../../components/detail/ImageCarousel";
+import ImageCarousel from "../../components/detail/ImageCarousel";
 import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-import NoImage from "../../../media/img/no-picture-available-icon-0.jpg";
+import NoImage from "../../media/img/no-picture-available-icon-0.jpg";
 import { timestampToDate } from "@/common/utils/timestampToDate";
 
 export const DetailMovieContainer = (data: Movie) => {

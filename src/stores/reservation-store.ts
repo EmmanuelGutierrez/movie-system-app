@@ -1,4 +1,4 @@
-import { Movie, Screening, SeatReservation } from "@/common/types/api-types";
+import { Movie, Screening, SeatReserveDto } from "@/common/types/api-types";
 // import { createStore } from "zustand/vanilla";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { create } from "zustand";
@@ -6,23 +6,28 @@ import { create } from "zustand";
 type statusTimer = "idle" | "running" | "completed" | "expired";
 
 export type ReservationState = {
-  reservation: {
-    movie?: Movie;
-    seatReservation?: SeatReservation[];
-    screening?: Screening;
+  reservation?: {
+    movie: Movie;
+    seatReservation: SeatReserveDto;
+    screening: Screening;
   };
   status: statusTimer;
   expireAt?: number | null;
   expiredModal: boolean;
   purchaseConfirmed: boolean;
+  hasHydrated: boolean;
 };
 
 export type ReservationAction = {
-  setReservation: (reservation: {
-    movie: Movie;
-    seatReservation: SeatReservation[];
-    screening: Screening;
-  }) => void;
+  setReservation: (
+    reservation:
+      | {
+          movie: Movie;
+          seatReservation: SeatReserveDto;
+          screening: Screening;
+        }
+      | undefined
+  ) => void;
   clearReservation: () => void;
   timeLeftMs: () => number;
   startTimer: (durationMs: number) => void;
@@ -30,26 +35,32 @@ export type ReservationAction = {
   relaseReservation: () => void;
   acknowledgeExpiredModel: () => void;
   resetPurchaseL: () => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
 };
 
 export type ReservationStore = ReservationState & ReservationAction;
 
 export const defaultInitState: ReservationState = {
-  reservation: {},
+  reservation: undefined,
   status: "idle",
   expiredModal: false,
   purchaseConfirmed: false,
+  hasHydrated: false,
 };
 
 export const createReservationStore = create<ReservationStore>()(
   persist(
     (set, get) => ({
       ...defaultInitState,
+      setHasHydrated: (hasHydrated) => {
+        console.log("HYDRES");
+        set(() => ({ hasHydrated }));
+      },
       setReservation: (reservation) =>
         set(() => ({
           reservation,
         })),
-      clearReservation: () => set(() => ({ reservation: {} })),
+      clearReservation: () => set(() => ({ reservation: undefined })),
       timeLeftMs() {
         const { expireAt } = get();
         if (!expireAt) return 0;
@@ -62,6 +73,7 @@ export const createReservationStore = create<ReservationStore>()(
           expireAt: null,
           expiredModal: true,
           purchaseConfirmed: false,
+          reservation: undefined
         })),
       startTimer: (durationMs) =>
         set((state) => {
@@ -103,7 +115,12 @@ export const createReservationStore = create<ReservationStore>()(
 
     {
       name: "reservation-storage",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.hasHydrated = true;
+        }
+      },
     }
   )
 );

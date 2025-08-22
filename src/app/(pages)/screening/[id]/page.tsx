@@ -1,50 +1,89 @@
 "use client";
 
-import {
-  SeatReservation,
-} from "@/common/types/api-types";
-import { SeatRow } from "@/app/containers/screening/SeatRow";
+import { Screening, SeatReservationIdDto } from "@/common/types/api-types";
+import { SeatRow } from "@/containers/screening/SeatRow";
 import { Button } from "@/components/ui/button";
 import { client } from "@/service/client";
 import { useEffect, useState } from "react";
+import { HeaderScreening } from "@/components/screening/HeaderScreening";
+// import { withHydration } from "@/hoc/hydration-boundary";
+import { createAuthStore } from "@/stores/auth-store";
+import { createReservationStore } from "@/stores/reservation-store";
+import { useRouter } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export default function CinemaSeatingSystem() {
-  const [seats, setSeats] = useState<SeatReservation[]>([]);
-  const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-
+  const router = useRouter();
+  const [screening, setScreening] = useState<Screening | undefined>();
+  const { user } = createAuthStore((state) => state);
+  const { setReservation, reservation, startTimer } = createReservationStore(
+    (state) => state
+  );
+  const [selectedSeats, setSelectedSeats] = useState<SeatReservationIdDto[]>(
+    reservation ? reservation.seatReservation.seatReserve : []
+  );
+  useEffect(() => {}, []);
   const getSeats = async () => {
     const data = await client.screening.screeningControllerFindOne(3);
-    setSeats(data.data.seatReservations);
+    setScreening(data.data);
   };
 
   useEffect(() => {
     getSeats();
   }, []);
 
-  const handleSeatClick = (seatId: number) => {
+  useEffect(() => {
+    console.log(reservation);
+  }, [reservation]);
+
+  // if (!reservationStore || !authStore || !authStore.user) {
+  //   return (
+  //     <>
+  //       <div className="min-h-screen">
+  //         <div className="max-w-6xl mx-auto">
+  //           {/* Título */}
+  //           <HeaderScreening />
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
+  const handleSeatClick = (seatReservation: SeatReservationIdDto) => {
     setSelectedSeats((prev) =>
-      prev.includes(seatId)
-        ? prev.filter((id) => id !== seatId)
-        : [...prev, seatId]
+      prev.some(
+        (s) => s.seatReservationId === seatReservation.seatReservationId
+      )
+        ? prev.filter(
+            (ps) => ps.seatReservationId !== seatReservation.seatReservationId
+          )
+        : [...prev, seatReservation]
     );
+  };
+
+  // const { setReservation, reservation } = reservationStore;
+
+  const handleReservation = () => {
+    if (screening && user) {
+      setReservation({
+        movie: screening.movie,
+        screening: screening,
+        seatReservation: {
+          screeningId: screening.id,
+          seatReserve: selectedSeats,
+          temporalTransactionId: `${user.id}-${screening.id}-${Date.now()}`,
+        },
+      });
+      startTimer(5 * 60 * 1000);//5 minutos
+      // redirect("/checkout")
+      router.push("/checkout");
+    }
   };
 
   return (
     <div className="min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
-        <h1 className="text-4xl font-bold text-white text-center mb-12">
-          Sistema de Reserva de Asientos
-        </h1>
-
-        {/* Pantalla */}
-        <div className="text-center mb-12">
-          <div className="text-white text-2xl font-bold mb-6">SCREEN</div>
-          <div className="relative mx-auto w-96 h-8 mb-8">
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-300 to-gray-600 rounded-t-full transform perspective-1000 rotateX-12 shadow-lg"></div>
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-400 to-gray-700 rounded-t-full transform translate-y-1 shadow-inner"></div>
-          </div>
-        </div>
+        <HeaderScreening />
 
         {/* Resto de asientos */}
         <div className="space-y-4 mb-12">
@@ -56,17 +95,27 @@ export default function CinemaSeatingSystem() {
               onSeatClick={handleSeatClick}
             />
           ))} */}
-          {Array.from(new Set(seats.map((seat) => {console.log(seat); return seat.seat.row;})))
-            .sort()
-            .map((row) => (
-              <SeatRow
-                selectedSeats={selectedSeats}
-                key={row}
-                row={row}
-                seats={seats.filter((seat) => seat.seat.row === row)}
-                onSeatClick={handleSeatClick}
-              />
-            ))}
+          {screening &&
+            Array.from(
+              new Set(
+                screening?.seatReservations.map((seat) => {
+                  console.log(seat);
+                  return seat.seat.row;
+                })
+              )
+            )
+              .sort()
+              .map((row) => (
+                <SeatRow
+                  selectedSeats={selectedSeats}
+                  key={row}
+                  row={row}
+                  seats={screening.seatReservations.filter(
+                    (seat) => seat.seat.row === row
+                  )}
+                  onSeatClick={handleSeatClick}
+                />
+              ))}
         </div>
 
         {/* Leyenda */}
@@ -88,17 +137,20 @@ export default function CinemaSeatingSystem() {
           <div className="bg-blue-800 rounded-lg p-4 mb-6 custom-container-md mt-10">
             <h3 className="font-semibold mb-2">Asientos seleccionados:</h3>
             <div className="flex gap-2 flex-wrap">
-              {selectedSeats.map((id) => (
+              {selectedSeats.map((s) => (
                 <span
-                  key={id}
+                  key={s.seatReservationId}
                   className="bg-blue-300 text-blue-900 px-2 py-1 rounded text-sm font-semibold"
                 >
-                  {id}
+                  {s.seatReservationId}
                 </span>
               ))}
             </div>
             <div className="mt-3 flex justify-center">
-              <Button className=" bg-green-600 hover:bg-green-700">
+              <Button
+                onClick={handleReservation}
+                className=" bg-green-600 hover:bg-green-700"
+              >
                 Confirmar selección ({selectedSeats.length} asiento
                 {selectedSeats.length !== 1 ? "s" : ""})
               </Button>
@@ -109,3 +161,5 @@ export default function CinemaSeatingSystem() {
     </div>
   );
 }
+
+// export default withHydration(CinemaSeatingSystem);

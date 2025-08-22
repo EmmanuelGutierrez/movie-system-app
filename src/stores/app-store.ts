@@ -15,11 +15,12 @@ export const defaultInitState: AppState = {
   showLoginForm: false,
 };
 
-export const createAppStore = create<AppState>()(
+export const createAppStore = create<AppStore>()(
   persist(
     (set) => ({
       ...defaultInitState,
-      toggleShowLoginForm: () => set((state) => ({ showLoginForm: !state.showLoginForm })),
+      toggleShowLoginForm: () =>
+        set((state) => ({ showLoginForm: !state.showLoginForm })),
     }),
     { name: "app-storage" }
   )

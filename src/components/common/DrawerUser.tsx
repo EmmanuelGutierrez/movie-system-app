@@ -15,70 +15,42 @@ import {
 } from "../ui/dialog";
 import { useWindowSize } from "@/hooks/userWindowSize";
 import { useAppStore } from "@/hooks/useAppStore";
-import { HTMLAttributes } from "react";
 import { LoginForm } from "../loginForm/LoginForm";
 import Link from "next/link";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { UserProfile } from "../detail/UserProfile";
+import { Button } from "../ui/button";
 
 export const DrawerUser = () => {
   const { width } = useWindowSize();
   const appStore = useAppStore((state) => state);
   const authStore = useAuthStore((state) => state);
-  if(!appStore ||!authStore){
-    return <></>
+  if (!appStore || !authStore) {
+    return <></>;
   }
-  const {user}=authStore
-  const contentClass: HTMLAttributes<HTMLElement>["className"] =
-    " bg-colors-primary border-colors-primary-hard";
-    console.log("USER",user)
-  if (width < 770) {
-    return (
-      <Drawer
-        open={appStore ? appStore.showLoginForm : false}
-        onOpenChange={appStore ? appStore.toggleShowLoginForm : () => {}}
-      >
-        <DrawerContent className={`mx-auto h-full w-100 ${contentClass}`}>
-          <DrawerHeader>
-            <p className="text-center h-1 text-2xl">
-              {user ? "Hola, Manu" : "Login"}
-            </p>
-          </DrawerHeader>
-          <DrawerDescription></DrawerDescription>
-          {user ? <UserProfile /> : <LoginForm />}
-          <DrawerFooter>
-            {user ? (
-              <p className="text-sm font-light">
-                ¿No tienes una cuenta?{" "}
-                <Link
-                  href="#"
-                  className=" text-colors-primary-light font-bold no-underline"
-                >
-                  Regístrate
-                </Link>
-              </p>
-            ) : (
-              <p>Cerrar sesion</p>
-            )}
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
+
+  const { user, logout } = authStore;
+
+  const ContainerComponent = width < 770 ? Drawer : Dialog;
+  const HeaderComponent = width < 770 ? DrawerHeader : DialogHeader;
+  const DescriptionComponent = width < 770 ? DrawerDescription : DialogDescription;
+  const FooterComponent = width < 770 ? DrawerFooter : DialogFooter;
+  const ContentComponent = width < 770 ? DrawerContent : DialogContent;
+
   return (
-    <Dialog
+    <ContainerComponent
       open={appStore ? appStore.showLoginForm : false}
       onOpenChange={appStore ? appStore.toggleShowLoginForm : () => {}}
     >
-      <DialogContent className={`${contentClass}`}>
-        <DialogHeader>
-          <p className="text-center h-1 text-2xl">
-            {user ? "Hola, Manu" : "Login"}
-          </p>
-        </DialogHeader>
-        <DialogDescription></DialogDescription>
-        {user?<UserProfile/>:<LoginForm />}
-        <DialogFooter>
+      <ContentComponent
+        className={`bg-colors-primary-hard  border-colors-primary-clear/30`}
+      >
+        <HeaderComponent className=" border-b pb-4 border-colors-primary-light/30 border-dashed">
+          <p className="text-center text-2xl">{user ? "Perfil" : "Login"}</p>
+        </HeaderComponent>
+        <DescriptionComponent></DescriptionComponent>
+        {user ? <UserProfile /> : <LoginForm />}
+        <FooterComponent>
           <div className="mx-auto ">
             {!user ? (
               <p className="text-sm font-light">
@@ -91,11 +63,13 @@ export const DrawerUser = () => {
                 </Link>
               </p>
             ) : (
-              <p>Cerrar sesion</p>
+              <Button className="bg-transparent" onClick={logout}>
+                Cerrar sesion
+              </Button>
             )}
           </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </FooterComponent>
+      </ContentComponent>
+    </ContainerComponent>
   );
 };

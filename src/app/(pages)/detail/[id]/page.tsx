@@ -1,5 +1,5 @@
 import { client } from "@/service/client";
-import { MovieDetailContainer } from "@/app/containers/MovieDetailContainer";
+import { MovieDetailContainer } from "@/containers/detail/MovieDetailContainer";
 
 export default async function Page({
   params,

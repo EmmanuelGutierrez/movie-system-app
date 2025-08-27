@@ -12,10 +12,9 @@ export const MovieDetailContainer = ({
   movie: Movie;
   screenings: Screening[];
 }) => {
-  console.log("SCreenings", screenings);
   return (
     <section className=" text-white font-medium mb-10">
-      <div className="-mb-40 -z-100 w-full h-90 bg-cover relative before:absolute  before:w-full before:h-full before:bg-linear-to-t before:from-colors-primary-dark before:via-colors-primary-dark/60 before:to-colors-primary-dark mask-b-from-85%   ">
+      <div className="-mb-40 -z-100 w-full h-90 bg-cover relative before:absolute  before:w-full before:h-full before:bg-linear-to-t before:from-colors-primary-hard before:via-colors-primary-hard/60 before:to-colors-primary-hard mask-b-from-85%   ">
         <Image
           src={movie.poster?.secure_url ?? NoImage}
           alt={"movie.name"}

@@ -49,6 +49,8 @@ export interface Movie {
   name: string;
   trailer_youtube_id: string;
   description: string;
+  details: string;
+  language: string;
   genres: Genre[];
   actors?: Person[];
   directors?: Person[];
@@ -156,6 +158,8 @@ export interface CreateMoviePhotosDto {
   name: string;
   trailer_url: string;
   description: string;
+  language: string;
+  detail: string;
   duration: number;
   release: number;
   directors?: string[];
@@ -191,9 +195,13 @@ export interface UpdateSeatDto {
   status: UpdateSeatDtoStatusEnum;
 }
 
+export interface SeatReservationIdDto {
+  seatReservationId: number;
+}
+
 export interface SeatReserveDto {
   /** @minItems 1 */
-  seatReserve: SeatReservation[];
+  seatReserve: SeatReservationIdDto[];
   screeningId: number;
   temporalTransactionId: string;
 }
@@ -423,6 +431,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerCreate
      * @request POST:/user
+     * @secure
      * @response `201` `User`
      */
     userControllerCreate: (data: CreateUserDto, params: RequestParams = {}) =>
@@ -430,6 +439,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/user`,
         method: "POST",
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -441,12 +451,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerFindAll
      * @request GET:/user
+     * @secure
      * @response `200` `(User)[]`
      */
     userControllerFindAll: (params: RequestParams = {}) =>
       this.request<User[], any>({
         path: `/user`,
         method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name UserControllerMe
+     * @request GET:/user/me
+     * @secure
+     * @response `200` `User`
+     */
+    userControllerMe: (params: RequestParams = {}) =>
+      this.request<User, any>({
+        path: `/user/me`,
+        method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),
@@ -457,12 +487,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name UserControllerFindOne
      * @request GET:/user/{id}
+     * @secure
      * @response `200` `User`
      */
     userControllerFindOne: (id: number, params: RequestParams = {}) =>
       this.request<User, any>({
         path: `/user/${id}`,
         method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),

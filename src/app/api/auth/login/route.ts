@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     cookies().set("auth_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60*60,
+      maxAge: 30,
       path: "/",
     });
     client.setSecurityData(token);

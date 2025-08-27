@@ -1,6 +1,6 @@
-import { Carousel } from "@/components/main/Carousel";
+import { Carousel } from "@/containers/main/Carousel";
 import { List } from "@/components/main/List";
-import { MainContainer } from "@/app/containers/MainContainer";
+import { MainContainer } from "@/containers/main/MainContainer";
 // import { useMovieStore } from "@/app/hooks/useMovieStore";
 import { client } from "@/service/client";
 import React from "react";

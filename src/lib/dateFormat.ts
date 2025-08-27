@@ -23,6 +23,18 @@ const getDayName = (date: Date) => {
   return date.toLocaleDateString("es-AR", { weekday: "short" }).toUpperCase();
 };
 
+const getFullDay=(date:Date)=>{
+  const day= date.toLocaleDateString("es-AR", { weekday: "long" })
+  const month=date.toLocaleDateString(
+    "es-AR",
+    {
+      day: "numeric",
+      month: "long",
+    }
+  )
+  return `${day.charAt(0).toUpperCase() + day.slice(1)} ${month.charAt(0).toUpperCase() + month.slice(1)} `;
+}
+
 const getShortDay = (date: Date) => {
   return date
     .toLocaleDateString("es-AR", { day: "numeric", month: "short" })
@@ -39,6 +51,12 @@ const formatHour = (date: Date) => {
     .toUpperCase();
 };
 
+const getHour = (date: Date) => {
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+  return `${hour}:${minutes}`;
+};
+
 const createTimestamp = (date: Date, hours: number, minutes: number) => {
   const d = new Date(date);
   d.setHours(hours, minutes, 0, 0);
@@ -53,4 +71,6 @@ export {
   getShortDay,
   formatHour,
   createTimestamp,
+  getHour,
+  getFullDay,
 };

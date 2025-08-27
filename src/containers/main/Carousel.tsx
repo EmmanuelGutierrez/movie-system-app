@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Movie } from "@/common/types/api-types";
-import { CarouselCard } from "./CarouselCard";
+import { CarouselCard } from "../../components/main/CarouselCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselProps {

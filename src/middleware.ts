@@ -1,26 +1,28 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const privateRoutes: string[] = [];
+const publicRoutes: string[] = ["/main", "/detail"];
 const authRoutes: string[] = ["/signin"];
 
 export default async function middleware(request: NextRequest) {
-  console.log("Middleware")
+  console.log("Middleware");
   const cookieStore = cookies();
   const token = cookieStore.get("auth_token");
-  console.log("token",token)
   const path = request.nextUrl.pathname;
-  const isProtected = privateRoutes.some((r) => r.startsWith(path));
-  console.log("path", path);
-  if ((!token||!token.value) && isProtected) {
+  console.log("PATH", path);
+  const isPublicPath = publicRoutes.some((r) => {
+    console.log(path.startsWith(r));
+    return path.startsWith(r);
+  });
+
+  const isAuthPath = authRoutes.includes(path);
+  console.log("public", !token || !token.value, isPublicPath);
+  if ((!token || !token.value) && !isPublicPath && !isAuthPath) {
     const absoluteUrl = new URL("/signin", request.nextUrl.origin);
     return NextResponse.redirect(absoluteUrl);
   }
-console.log("isProtected", isProtected);
-const isAuth = authRoutes.includes(path);
-console.log("isAuth", isAuth, token && isAuth);
-  if (token && isAuth) {
-    console.log("RED")
+  console.log("isAuthPath", !token || !token.value, isAuthPath);
+  if (token && isAuthPath) {
     const absoluteUrl = new URL("/main", request.nextUrl.origin);
     return NextResponse.redirect(absoluteUrl);
   }

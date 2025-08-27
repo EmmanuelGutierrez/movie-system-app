@@ -1,6 +1,10 @@
 "use client";
 
-import { Screening, SeatReservationIdDto } from "@/common/types/api-types";
+import {
+  Screening,
+  SeatReservationIdDto,
+  SeatReservationStatusEnum,
+} from "@/common/types/api-types";
 import { SeatRow } from "@/containers/screening/SeatRow";
 import { Button } from "@/components/ui/button";
 import { client } from "@/service/client";
@@ -9,12 +13,19 @@ import { HeaderScreening } from "@/components/screening/HeaderScreening";
 // import { withHydration } from "@/hoc/hydration-boundary";
 import { createAuthStore } from "@/stores/auth-store";
 import { createReservationStore } from "@/stores/reservation-store";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { TIME_RESERVATION } from "@/common/constants/timeConstants";
+import { useSocket } from "@/hooks/useSocket";
+import { SeatReservationI } from "@/common/interface/SeatReservationI";
+import { IoSeatReservationResI } from "@/common/interface/IoSeatReservationResI";
+// import { toast } from "sonner";
 // import { redirect } from "next/navigation";
 
 export default function CinemaSeatingSystem() {
   const router = useRouter();
+  const { id } = useParams<{ id: string }>();
   const [screening, setScreening] = useState<Screening | undefined>();
+  const [reservedSeats, setReservedSeats] = useState<SeatReservationI[]>([]);
   const { user } = createAuthStore((state) => state);
   const { setReservation, reservation, startTimer } = createReservationStore(
     (state) => state
@@ -22,19 +33,72 @@ export default function CinemaSeatingSystem() {
   const [selectedSeats, setSelectedSeats] = useState<SeatReservationIdDto[]>(
     reservation ? reservation.seatReservation.seatReserve : []
   );
-  useEffect(() => {}, []);
-  const getSeats = async () => {
-    const data = await client.screening.screeningControllerFindOne(3);
+  const protocol = window.location.protocol === "https" ? "wss" : "ws";
+  // const backUrl =
+  //   process.env["BACKEND_URL"] ?? process.env["NEXT_PUBLIC_BACKEND_URL"];
+  const { connected, socket } = useSocket(
+    `${protocol}://localhost:81/screening`
+  );
+  useEffect(() => {
+    if (!socket || !connected) return;
+    socket.emit("joinScreening", [`${id}`]);
+    socket.on("joinScreening", (msgs: IoSeatReservationResI[]) => {
+      setSelectedSeats((prev) => {
+        const newState = prev.filter((p) =>
+          !msgs.some((msg) => msg.seatReservationId === p.seatReservationId)
+        );
+        return newState;
+      });
+      setReservedSeats((prev) => {
+        let newState = [...prev];
+        msgs.forEach((m) => {
+          if (m.status === SeatReservationStatusEnum.TemporarilyReserved) {
+            newState = [
+              ...newState,
+              { id: m.seatReservationId, status: m.status },
+            ];
+          } else {
+            newState = newState.filter((p) => p.id !== m.seatReservationId);
+          }
+        });
+        return newState;
+      });
+      setScreening((prev) => {
+        if (!prev) return prev;
+        const updatedSeats = prev.seatReservations.map((sr) => {
+          const match = msgs.find(
+            (msg) =>
+              msg.seatReservationId === sr.id &&
+              msg.status === SeatReservationStatusEnum.Occupied
+          );
+          console.log("match", match);
+          return match
+            ? { ...sr, status: SeatReservationStatusEnum.Occupied }
+            : sr;
+        });
+        console.log("NUEVO", { ...prev, seatReservations: updatedSeats });
+        return { ...prev, seatReservations: updatedSeats };
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected, id, socket]);
+  // console.log("SCREENING",screening)
+  const getSeats = async (id: number) => {
+    const data = await client.screening.screeningControllerFindOne(id);
+    const reservedSeatsData =
+      await client.screening.screeningControllerGetTemporarilyReserveSeat(id);
+    // console.log("DATA", data);
     setScreening(data.data);
+    setReservedSeats(reservedSeatsData.data);
   };
 
   useEffect(() => {
-    getSeats();
-  }, []);
+    getSeats(parseInt(id));
+  }, [id]);
 
-  useEffect(() => {
-    console.log(reservation);
-  }, [reservation]);
+  // useEffect(() => {
+  //   console.log(reservation);
+  // }, [reservation]);
 
   // if (!reservationStore || !authStore || !authStore.user) {
   //   return (
@@ -73,8 +137,9 @@ export default function CinemaSeatingSystem() {
           temporalTransactionId: `${user.id}-${screening.id}-${Date.now()}`,
         },
       });
-      startTimer(5 * 60 * 1000);//5 minutos
+      startTimer(TIME_RESERVATION); //5 minutos
       // redirect("/checkout")
+      // toast("TEST",{description:"DESC"})
       router.push("/checkout");
     }
   };
@@ -99,7 +164,6 @@ export default function CinemaSeatingSystem() {
             Array.from(
               new Set(
                 screening?.seatReservations.map((seat) => {
-                  console.log(seat);
                   return seat.seat.row;
                 })
               )
@@ -108,6 +172,7 @@ export default function CinemaSeatingSystem() {
               .map((row) => (
                 <SeatRow
                   selectedSeats={selectedSeats}
+                  reservedSeats={reservedSeats}
                   key={row}
                   row={row}
                   seats={screening.seatReservations.filter(
@@ -121,16 +186,20 @@ export default function CinemaSeatingSystem() {
         {/* Leyenda */}
         <div className="flex justify-center gap-8 text-white text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-800 border border-blue-600 rounded"></div>
+            <div className="w-6 h-6 bg-colors-primary border border-colors-primary-accent rounded"></div>
             <span>Disponible</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-500 border border-blue-400 rounded"></div>
+            <div className="w-6 h-6 bg-colors-primary-clear border border-colors-primary-accent rounded"></div>
             <span>Seleccionado</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-gray-600 border border-gray-500 rounded"></div>
             <span>Ocupado</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-colors-success border border-colors-success-light rounded"></div>
+            <span>Temp. Reservado</span>
           </div>
         </div>
         {selectedSeats.length > 0 && (

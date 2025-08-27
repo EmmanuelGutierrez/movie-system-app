@@ -3,9 +3,9 @@ import { Input } from "../common/Input";
 
 export const Search = () => {
   return (
-    <div className="custom-container bg-linear-to-r from-colors-primary-hard to-colors-secondary-clear  -mt-10  relative px-8 flex flex-col justify-between">
+    <div className="custom-container bg-linear-to-r from-colors-primary to-colors-secondary-clear  -mt-10  relative px-8 flex flex-col justify-between">
       <div className="mt-8">
-        <h3 className="text-xl font-bold text-colors-primary-clear ml-6">
+        <h3 className="text-xl font-bold text-white ml-6">
           Bienvenido a 4KSTAR
         </h3>
         <h2 className="text-4xl font-bold mt-4">¿Que esta buscando?</h2>

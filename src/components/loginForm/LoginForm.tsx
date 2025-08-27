@@ -3,13 +3,14 @@
 import type React from "react";
 
 // import { useRouter } from "next/navigation";
-import { HTMLAttributes,  useEffect } from "react";
+import { HTMLAttributes, useEffect } from "react";
 import { Button } from "../ui/button";
 import { loginAction } from "@/actions/auth/loginAction";
 // import { useFormState } from "react-dom";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { useAppStore } from "@/hooks/useAppStore";
 import { useFormState } from "react-dom";
+import { usePathname, useRouter } from "next/navigation";
 // import { useFormState } from "react-dom";
 
 export const LoginForm = ({
@@ -18,6 +19,8 @@ export const LoginForm = ({
   className?: HTMLAttributes<HTMLElement>["className"];
 }) => {
   const [state, formAction] = useFormState(loginAction, {});
+  const router = useRouter();
+  const pathname = usePathname();
 
   const authStore = useAuthStore((state) => state);
   const appStore = useAppStore((state) => state);
@@ -52,9 +55,14 @@ export const LoginForm = ({
   //     } */
   //   };
   useEffect(() => {
+    console.log("USER EFFECT", !!state.user, !!authStore, !!appStore);
     if (state.user && authStore && appStore) {
-      appStore.toggleShowLoginForm();
       authStore.login(state.user);
+      if (pathname === "/signin" || !appStore.showLoginForm) {
+        router.push("/main");
+      } else {
+        appStore.toggleShowLoginForm();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user]);
@@ -89,7 +97,6 @@ export const LoginForm = ({
               <label htmlFor="password" className="block text-sm font-medium ">
                 Contraseña
               </label>
-             
             </div>
             <input
               id="password"
@@ -106,14 +113,11 @@ export const LoginForm = ({
               {state.error}
             </p>
           )}
-          <Button
-            type="submit"
-            className="self-center w-full bg-colors-primary-dark hover:bg-colors-primary-dark/70"
-          >
+          <Button type="submit" className="self-center w-full ">
             Login
           </Button>
         </form>
-       {/*  <div className="mt-4 text-center text-sm">
+        {/*  <div className="mt-4 text-center text-sm">
           ¿No tienes una cuenta?{" "}
           <Link href="#" className="underline text-colors-primary-light">
             Regístrate

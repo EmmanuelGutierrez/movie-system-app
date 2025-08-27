@@ -2,7 +2,7 @@ import { Movie, Screening, SeatReserveDto } from "@/common/types/api-types";
 // import { createStore } from "zustand/vanilla";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { create } from "zustand";
-
+import { client } from "@/service/client";
 type statusTimer = "idle" | "running" | "completed" | "expired";
 
 export type ReservationState = {
@@ -56,10 +56,16 @@ export const createReservationStore = create<ReservationStore>()(
         console.log("HYDRES");
         set(() => ({ hasHydrated }));
       },
-      setReservation: (reservation) =>
-        set(() => ({
-          reservation,
-        })),
+      setReservation: async (reservation) => {
+        if (reservation) {
+          await client.screening.screeningControllerTempReserveSeat(
+            reservation.seatReservation
+          );
+        }
+        return set(() => {
+          return { reservation };
+        });
+      },
       clearReservation: () => set(() => ({ reservation: undefined })),
       timeLeftMs() {
         const { expireAt } = get();
@@ -67,14 +73,15 @@ export const createReservationStore = create<ReservationStore>()(
         const timeLeft = Math.max(0, expireAt - Date.now());
         return timeLeft;
       },
-      relaseReservation: () =>
+      relaseReservation: () => {
         set(() => ({
           status: "expired",
           expireAt: null,
           expiredModal: true,
           purchaseConfirmed: false,
-          reservation: undefined
-        })),
+          reservation: undefined,
+        }));
+      },
       startTimer: (durationMs) =>
         set((state) => {
           if (

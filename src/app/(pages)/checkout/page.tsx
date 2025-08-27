@@ -1,25 +1,39 @@
-'use client'
+"use client";
 import { HeaderCheckout } from "@/components/checkout/header";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getFullDay, getHour } from "@/lib/dateFormat";
 import { createReservationStore } from "@/stores/reservation-store";
+import { AlertTriangle, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 export default function Page() {
   const { reservation } = createReservationStore((state) => state);
-  const router=useRouter()
-  if(!reservation){
-    router.push("/main")
-  }
-  const totalPrice =reservation?
-    reservation.seatReservation.seatReserve.length *
-    reservation.screening.price:0;
+  const [time, setTime] = useState(5);
+  const router = useRouter();
+  useEffect(() => {
+    if (time === 0) {
+      router.push("/main");
+    }
+    if (!reservation) {
+      const id = setTimeout(() => {
+        setTime((prev) => prev - 1);
+      }, 1000);
+      return () => clearTimeout(id);
+    }
+  }, [reservation, router, time]);
+  const totalPrice = reservation
+    ? reservation.seatReservation.seatReserve.length *
+      reservation.screening.price
+    : 0;
   return (
     <main>
-      {reservation && (
+      {reservation ? (
         <>
           <HeaderCheckout reservation={reservation} />
           <section
-            className="custom-container my-32 relative flex flex-col bg-colors-primary-dark w-100 mx-auto border border-colors-primary-clear/60
+            className=" custom-container my-32 relative flex flex-col bg-colors-primary-dark w-100 mx-auto border border-colors-primary-clear/60
                          [&_h6]:text-2xl"
           >
             <div
@@ -81,6 +95,43 @@ export default function Page() {
             <Button className="mx-auto mb-7">Comprar</Button>
           </section>
         </>
+      ) : (
+        <Card className="w-full max-w-md mx-auto text-white">
+          <CardHeader className="text-center space-y-4">
+            <div className="mx-auto w-16 h-16 bg-colors-danger-light/30 border-colors-danger border rounded-full flex items-center justify-center">
+              <AlertTriangle className="w-8 h-8 text-colors-danger" />
+            </div>
+            <CardTitle className="text-xl font-semibold ">
+              Reservación Expirada
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-6 text-center">
+            <div className="space-y-2">
+              <p className="">
+                Tu reservación de asientos ha expirado debido a inactividad.
+              </p>
+              <p className="text-sm font-light">
+                Los asientos seleccionados han sido liberados para otros
+                usuarios.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center space-x-2 text-sm ">
+              <Clock className="w-4 h-4" />
+              <span>
+                Redirigiendo en {time} segundo{time !== 1 ? "s" : ""}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <Button onClick={() => router.push("/main")} className="w-full bg-colors-primary-hard hover:bg-colors-primary-hard/60">
+                Volver al Inicio
+              </Button>
+
+            </div>
+          </CardContent>
+        </Card>
       )}
     </main>
   );

@@ -5,6 +5,7 @@ import { Source_Sans_3 } from "next/font/google";
 import { DrawerUser } from "@/components/common/DrawerUser";
 import { HydrationLoader } from "@/providers/hydration-loader";
 import RservationWatcher from "@/containers/reservation-watcher/ReservationWatcher";
+import { Toaster } from "@/components/ui/sonner";
 // import { AuthGuard } from "./containers/common/AuthGuard";
 
 const geistSans = localFont({
@@ -41,6 +42,7 @@ export default function RootLayout({
       >
         <HydrationLoader>
           <DrawerUser />
+          <Toaster/>
           <RservationWatcher/>
           {/* <AuthGuard  fallback={<><p>...cargando auth</p></>}> */}
             

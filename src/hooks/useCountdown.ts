@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { createReservationStore } from "@/stores/reservation-store";
+import { TIME_RESERVATION } from "@/common/constants/timeConstants";
 
-export function useCountdown(tickMs: number) {
+export function useCountdown(tickMs=250) {
   const { status, expireAt, timeLeftMs } = createReservationStore(
     (store) => store
   );
@@ -25,7 +26,7 @@ export function useCountdown(tickMs: number) {
   const effectiveMsLeft =
     status === "running" ? Math.min(msLeft, timeLeftMs()) : 0;
   console.log("Efective",effectiveMsLeft)
-  const total = 5 * 1000 * 60; // 5min
+  const total = TIME_RESERVATION; // 5min
   const seconds = Math.floor((effectiveMsLeft / 1000) % 60);
   const minutes = Math.floor(effectiveMsLeft / 1000/ 60);
   const progress = 1 - effectiveMsLeft / total;

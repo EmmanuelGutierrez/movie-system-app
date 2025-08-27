@@ -1,6 +1,8 @@
 'use client'
 import { createReservationStore } from "@/stores/reservation-store";
+import { BellRing } from "lucide-react";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function RservationWatcher() {
   const { status, expireAt, relaseReservation } = createReservationStore(
@@ -13,7 +15,13 @@ export default function RservationWatcher() {
       console.log("Timer check", time/60 ,time%60);
        console.log("PRE RELASE ",Date.now() , expireAt,Date.now() >= expireAt);
       if (Date.now() >= expireAt) {
-        console.log("RELASE");
+         toast("Tiempo excedido", {
+           description: "Se le redireccionara a la vista principal",
+           duration: 8000,
+           position: "bottom-center",
+           action: { label: "Cerrar", onClick: () => console.log("cerrar") },
+           icon:<BellRing/>
+         });
         relaseReservation();
       }
     };

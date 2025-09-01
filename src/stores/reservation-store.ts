@@ -10,6 +10,7 @@ export type ReservationState = {
     movie: Movie;
     seatReservation: SeatReserveDto;
     screening: Screening;
+    invoiceUrl?: string;
   };
   status: statusTimer;
   expireAt?: number | null;
@@ -58,12 +59,19 @@ export const createReservationStore = create<ReservationStore>()(
       },
       setReservation: async (reservation) => {
         if (reservation) {
-          await client.screening.screeningControllerTempReserveSeat(
+          const res = await client.screening.screeningControllerTempReserveSeat(
             reservation.seatReservation
           );
+          return set(() => {
+            return {
+              reservation: { ...reservation, invoiceUrl: res.data.invoice.init_point },
+            };
+          });
         }
         return set(() => {
-          return { reservation };
+          return {
+            reservation,
+          };
         });
       },
       clearReservation: () => set(() => ({ reservation: undefined })),

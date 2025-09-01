@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getFullDay, getHour } from "@/lib/dateFormat";
 import { createReservationStore } from "@/stores/reservation-store";
 import { AlertTriangle, Clock } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const { reservation } = createReservationStore((state) => state);
+  const { reservation,status } = createReservationStore((state) => state);
   const [time, setTime] = useState(5);
   const router = useRouter();
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function Page() {
     : 0;
   return (
     <main>
-      {reservation ? (
+      {status === "running" && reservation && (
         <>
           <HeaderCheckout reservation={reservation} />
           <section
@@ -92,10 +93,15 @@ export default function Page() {
               <h6>Total:</h6>
               <h6>{totalPrice * 1.21}</h6>
             </div>
-            <Button className="mx-auto mb-7">Comprar</Button>
+            {reservation.invoiceUrl && (
+              <Link className="mx-auto mb-7" href={reservation.invoiceUrl}>
+                Ir a pagar
+              </Link>
+            )}
           </section>
         </>
-      ) : (
+      )}
+      {status === "expired" && !reservation && (
         <Card className="w-full max-w-md mx-auto text-white">
           <CardHeader className="text-center space-y-4">
             <div className="mx-auto w-16 h-16 bg-colors-danger-light/30 border-colors-danger border rounded-full flex items-center justify-center">
@@ -125,10 +131,12 @@ export default function Page() {
             </div>
 
             <div className="space-y-3">
-              <Button onClick={() => router.push("/main")} className="w-full bg-colors-primary-hard hover:bg-colors-primary-hard/60">
+              <Button
+                onClick={() => router.push("/main")}
+                className="w-full bg-colors-primary-hard hover:bg-colors-primary-hard/60"
+              >
                 Volver al Inicio
               </Button>
-
             </div>
           </CardContent>
         </Card>

@@ -6,7 +6,6 @@ export const useAppStore = <T>(
   selector: (store: AppStore) => T
 ): T | undefined => {
   const result = useStore(createAppStore, selector);
-  console.log("STORE", result);
   //   if (result === undefined) {
   //     throw new Error(
   //       "useAppStore returned undefined. Make sure the provider is set up correctly."

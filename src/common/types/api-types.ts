@@ -18,6 +18,53 @@ export interface CreateUserDto {
   password: string;
 }
 
+export interface UrlsDto {
+  success?: string;
+  pending?: string;
+  failure?: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  password: string;
+  name: string | null;
+  lastName: string | null;
+  role: UserRoleEnum;
+  lastLoginAt?: number | null;
+  createdAt: number;
+  updatedAt: number;
+  seatReservations: SeatReservation[];
+  invoices: Invoice[];
+}
+
+export interface Invoice {
+  redirect_urls?: UrlsDto;
+  back_urls?: UrlsDto;
+  id: number;
+  seatReservations: SeatReservation[];
+  user: User;
+  additional_info?: string;
+  auto_return?: string;
+  client_id?: string;
+  collector_id?: number;
+  date_created?: string;
+  date_of_expiration?: string;
+  expiration_date_from?: string;
+  expiration_date_to?: string;
+  expires?: boolean;
+  external_id?: string;
+  init_point?: string;
+  marketplace_fee?: number;
+  notification_url?: string;
+  operation_type?: string;
+  site_id?: string;
+  taxes?: object[];
+  total: number;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface Genre {
   id: number;
   name: string;
@@ -108,25 +155,13 @@ export interface Screening {
   updatedAt: number;
 }
 
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-  name: string | null;
-  lastName: string | null;
-  role: UserRoleEnum;
-  lastLoginAt?: number | null;
-  createdAt: number;
-  updatedAt: number;
-  seatReservations: SeatReservation[];
-}
-
 export interface SeatReservation {
   id: number;
+  invoice?: Invoice;
   status: SeatReservationStatusEnum;
   screening: Screening;
   seat: Seat;
-  user: User;
+  user?: User;
   createdAt: number;
   updatedAt: number;
 }
@@ -149,10 +184,6 @@ export interface UpdateCinemaDto {
   description?: string;
   location?: string;
 }
-
-export type CreateInvoiceDto = object;
-
-export type UpdateInvoiceDto = object;
 
 export interface CreateMoviePhotosDto {
   name: string;
@@ -199,11 +230,30 @@ export interface SeatReservationIdDto {
   seatReservationId: number;
 }
 
-export interface SeatReserveDto {
+export interface SeatReserveTempDto {
   /** @minItems 1 */
   seatReserve: SeatReservationIdDto[];
   screeningId: number;
   temporalTransactionId: string;
+}
+
+export interface TempReserveGroupSeatRes {
+  success: boolean;
+  message: string;
+  invoice: Invoice;
+}
+
+export interface ReserveSeatPaymentDto {
+  preferenceId: string;
+  temporalTransactionId: string;
+}
+
+export interface ReserveSeatsRes {
+  success: boolean;
+  message: string;
+  invoice: Invoice;
+  screening: Screening;
+  seatReservations: SeatReservation[];
 }
 
 export interface CreateTheaterDto {
@@ -590,91 +640,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  invoice = {
-    /**
-     * No description
-     *
-     * @tags Invoice
-     * @name InvoiceControllerCreate
-     * @request POST:/invoice
-     * @response `201` `string`
-     */
-    invoiceControllerCreate: (data: CreateInvoiceDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/invoice`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Invoice
-     * @name InvoiceControllerFindAll
-     * @request GET:/invoice
-     * @response `200` `string`
-     */
-    invoiceControllerFindAll: (params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/invoice`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Invoice
-     * @name InvoiceControllerFindOne
-     * @request GET:/invoice/{id}
-     * @response `200` `string`
-     */
-    invoiceControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/invoice/${id}`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Invoice
-     * @name InvoiceControllerUpdate
-     * @request PATCH:/invoice/{id}
-     * @response `200` `string`
-     */
-    invoiceControllerUpdate: (id: string, data: UpdateInvoiceDto, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/invoice/${id}`,
-        method: "PATCH",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Invoice
-     * @name InvoiceControllerRemove
-     * @request DELETE:/invoice/{id}
-     * @response `200` `string`
-     */
-    invoiceControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/invoice/${id}`,
-        method: "DELETE",
-        format: "json",
-        ...params,
-      }),
-  };
   movie = {
     /**
      * No description
@@ -979,15 +944,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name ScreeningControllerTempReserveSeat
      * @request PATCH:/screening/temp-reserve-seat
      * @secure
-     * @response `200` `void`
+     * @response `200` `TempReserveGroupSeatRes`
      */
-    screeningControllerTempReserveSeat: (data: SeatReserveDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+    screeningControllerTempReserveSeat: (data: SeatReserveTempDto, params: RequestParams = {}) =>
+      this.request<TempReserveGroupSeatRes, any>({
         path: `/screening/temp-reserve-seat`,
         method: "PATCH",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -998,15 +964,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name ScreeningControllerReserveSeat
      * @request PATCH:/screening/reserve-seat
      * @secure
-     * @response `200` `void`
+     * @response `200` `ReserveSeatsRes`
      */
-    screeningControllerReserveSeat: (data: SeatReserveDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+    screeningControllerReserveSeat: (data: ReserveSeatPaymentDto, params: RequestParams = {}) =>
+      this.request<ReserveSeatsRes, any>({
         path: `/screening/reserve-seat`,
         method: "PATCH",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };

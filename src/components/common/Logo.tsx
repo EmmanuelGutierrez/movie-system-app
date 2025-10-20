@@ -7,13 +7,13 @@ export const Logo=()=>{
       <Link href={'/main'}>
         <div className="flex justify-center items-center ">
           <Image
-            className=" h-15 w-20 "
+            className=" h-13 w-17 "
             src={LogoPng}
             alt="logo"
             height={300}
             width={300}
           />
-          <p className="text-3xl font-bold">
+          <p className="text-2xl font-bold">
             Cinema <span className="text-colors-primary-clear">Star</span>
           </p>
         </div>

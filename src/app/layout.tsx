@@ -42,10 +42,10 @@ export default function RootLayout({
       >
         <HydrationLoader>
           <DrawerUser />
-          <Toaster/>
-          <RservationWatcher/>
+          <Toaster />
+          <RservationWatcher />
           {/* <AuthGuard  fallback={<><p>...cargando auth</p></>}> */}
-            
+
           {children}
           {/* </AuthGuard> */}
         </HydrationLoader>

@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(-font-source-sans-3), sans-serif;
+  --font-sans: var(--font-source-sans-3), sans-serif;
 
   --margin-main: 21rem;
 
@@ -137,10 +137,10 @@
   --color-colors-primary-accent: oklch(0.8321 0.1359 211.15); 
   --color-colors-primary-alt1: oklch(0.499 0.2743 273.8); 
   --color-colors-primary-alt2: oklch(05535 02669 294.25); 
-  --color-colors-primary-hard: oklch(0.2074 0.0606 262.74); 
+  --color-colors-primary-hard: oklch(0.1296 0.0274 261.69);
   --color-colors-primary-light: oklch(0.4701 0.0802 263.37); 
-  --color-colors-primary-dark: oklch(26.97% 0.1167 265.4); 
-  --color-colors-primary-clear:  oklch(0.5757 0.2053 265.8);  
+  --color-colors-primary-dark: oklch(26.97% 0.1167 265.4);
+  --color-colors-primary-clear:  oklch(0.5282 0.2307 265.8);  
 
   --color-colors-secondary: oklch(45.09% 0.1 300.01); /* #5250a5 */
   --color-colors-secondary-hard: oklch(35.09% 0.1 330.01); /* #75296f */
@@ -150,16 +150,16 @@
   --color-colors-white: oklch(100% 0 0); /* #ffffff */
   --color-colors-white-dark: oklch(95.09% 0 0); /* #f4f5f7 */
 
-  --color-colors-black: oklch(0% 0 0); /* #000000 */
-  --color-colors-black-light: oklch(25.09% 0.02 270.01); /* #383a45 */
-  --color-colors-black-dark: oklch(15.09% 0 0); /* #262626 */
+  --color-colors-black: oklch(0.2393 0 0); /* #000000 */
+  --color-colors-black-light: oklch(0.2789 0 0); /* #383a45 */
+  --color-colors-black-dark: oklch(0.1365 0 0); /* #262626 */
 
   --color-colors-gray: oklch(20.09% 0 0); /* #333333 */
   --color-colors-gray-dark: oklch(10.09% 0 0); /* #1a1a1a */
   --color-colors-gray-light: oklch(85.09% 0 0); /* #d7d7d7 */
 
-  --color-colors-danger: oklch(55.09% 0.2 20.01); /* #dc3545 */
-  --color-colors-danger-light: oklch(65.09% 0.25 20.01); /* #dc143c */
+  --color-colors-danger: oklch(0.5786 0.2284 26.71); /* #dc3545 */
+  --color-colors-danger-light: oklch(65.09% 0.25 25.01); /* #dc143c */
 
   --color-colors-success: oklch(50.09% 0.1 140.01); /* #28a745 */
   --color-colors-success-light: oklch(60.09% 0.1 140.01); /* #2ecc71 */
@@ -291,8 +291,8 @@
   --foreground: oklch(0.145 0 0);
   --card: var(--color-colors-primary);
   --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --popover: var(--color-colors-primary);
+  --popover-foreground:  var(--color-colors-white);
   --primary:var(--color-colors-primary);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);

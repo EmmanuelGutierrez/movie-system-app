@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     const { token } = backendResponse.data;
 
-    cookies().set("auth_token", token, {
+    (await cookies()).set("auth_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 30,

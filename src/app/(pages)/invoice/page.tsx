@@ -14,22 +14,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import {
-  ForwardRefExoticComponent,
-  RefAttributes,
-  useEffect,
-  useState,
-} from "react";
+import { ForwardRefExoticComponent, RefAttributes, useEffect, useState, use } from "react";
 import { client } from "@/service/client";
 import { SeatReservation } from "@/common/types/api-types";
 import { getFullDay, getHour } from "@/lib/dateFormat";
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     statusMP?: string;
     temporalTransactionId?: string;
     preference_id: string;
-  };
+  }>;
 }
 
 type PaymentStatus = "success" | "failure" | "pending";
@@ -57,7 +52,8 @@ interface contentI {
   showDownloadButton: boolean;
 }
 
-export default function PurchaseStatusPage({ searchParams }: PageProps) {
+export default function PurchaseStatusPage(props: PageProps) {
+  const searchParams = use(props.searchParams);
   const statusMP: PaymentStatus =
     (searchParams.statusMP as PaymentStatus) || "success";
   const temporalTransactionId: string | undefined =

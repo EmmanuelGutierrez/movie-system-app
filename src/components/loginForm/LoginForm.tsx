@@ -3,13 +3,12 @@
 import type React from "react";
 
 // import { useRouter } from "next/navigation";
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes, useActionState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { loginAction } from "@/actions/auth/loginAction";
 // import { useFormState } from "react-dom";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { useAppStore } from "@/hooks/useAppStore";
-import { useFormState } from "react-dom";
 import { usePathname, useRouter } from "next/navigation";
 // import { useFormState } from "react-dom";
 
@@ -18,7 +17,7 @@ export const LoginForm = ({
 }: {
   className?: HTMLAttributes<HTMLElement>["className"];
 }) => {
-  const [state, formAction] = useFormState(loginAction, {});
+  const [state, formAction] = useActionState(loginAction, {});
   const router = useRouter();
   const pathname = usePathname();
 

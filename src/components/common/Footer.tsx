@@ -22,17 +22,17 @@ export const Footer = () => {
               classContainer="w-50 lg:w-80"
               color="primary"
             />
-            <Button >Enviar</Button>
+            <Button>Enviar</Button>
           </div>
         </div>
       </div>
       <div
-        className={` bg-black text-white py-4 px-6 transition-all duration-300 z-1000 `}
+        className={` bg-colors-black-dark text-white py-4 px-6 transition-all duration-300 z-1000 `}
         // style={{ zIndex: 1000 }}
       >
         <div className="container mx-auto flex flex-col justify-between items-center md:flex-row">
           <div className="flex justify-center items-center flex-col md:flex-row mb-5 md:mb-0">
-            <Logo/>
+            <Logo />
             <div className="flex items-center md:items-start space-x-4 flex-col ml-6 h-full justify-between">
               <p>© Cinema Star</p>
               <p>Create by Emmanuel Gutierrez</p>

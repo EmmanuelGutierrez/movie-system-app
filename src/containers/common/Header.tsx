@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "../../components/common/Logo";
 import { UserAvatar } from "@/components/header/UserAvatar";
-
 export const Header = () => {
   // const [isVisible, setIsVisible] = useState(true);
   const [isSticky, setIsSticky] = useState(false);
@@ -42,6 +41,7 @@ export const Header = () => {
           <User className="w-5 h-5 text-white" />
         </Button> */}
         <UserAvatar />
+        
         {/* <ShoppingCart className="w-5 h-5 text-white" /> */}
       </div>
     </>
@@ -62,7 +62,7 @@ export const Header = () => {
       </header>
       <div
         ref={stickyHeaderRef}
-        className={`fixed top-0 left-0 right-0 bg-black text-white py-4 px-6 transition-all duration-300 z-1000 ${
+        className={`fixed top-0 left-0 right-0 bg-colors-black-dark text-white py-4 px-6 transition-all duration-300 z-1000 ${
           isSticky ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
         }`}
         // style={{ zIndex: 1000 }}

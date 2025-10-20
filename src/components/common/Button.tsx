@@ -2,6 +2,8 @@ import { bgColors } from "@/common/constants/backgroundColors";
 import { fontWeightEnum } from "@/common/constants/fontWeight";
 import { twMerge } from "tailwind-merge";
 
+import type { JSX } from "react";
+
 interface ButtonPropsI {
   rounded?: boolean;
   outline?: boolean;

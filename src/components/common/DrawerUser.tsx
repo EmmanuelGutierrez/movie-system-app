@@ -5,6 +5,7 @@ import {
   DrawerHeader,
   DrawerFooter,
   DrawerDescription,
+  DrawerTitle,
 } from "../ui/drawer";
 import {
   Dialog,
@@ -20,6 +21,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/hooks/useAuthStore";
 import { UserProfile } from "../detail/UserProfile";
 import { Button } from "../ui/button";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 export const DrawerUser = () => {
   const { width } = useWindowSize();
@@ -36,6 +38,7 @@ export const DrawerUser = () => {
   const DescriptionComponent = width < 770 ? DrawerDescription : DialogDescription;
   const FooterComponent = width < 770 ? DrawerFooter : DialogFooter;
   const ContentComponent = width < 770 ? DrawerContent : DialogContent;
+  const TitleComponent = width < 770 ? DrawerTitle : DialogTitle;
 
   return (
     <ContainerComponent
@@ -45,6 +48,7 @@ export const DrawerUser = () => {
       <ContentComponent
         className={`bg-colors-primary-hard  border-colors-primary-clear/30`}
       >
+        <TitleComponent></TitleComponent>
         <HeaderComponent className=" border-b pb-4 border-colors-primary-light/30 border-dashed">
           <p className="text-center text-2xl">{user ? "Perfil" : "Login"}</p>
         </HeaderComponent>

@@ -28,12 +28,13 @@ export async function loginAction(
       email,
       password,
     });
-     console.log("B");
+    console.log("B");
     if (response.data) {
       const token = response.data.token;
 
-       console.log("T",token);
-      cookies().set({
+      console.log("T", token);
+      const cookiesStore = await cookies();
+      cookiesStore.set({
         name: "auth_token",
         value: token,
         httpOnly: true,
@@ -42,9 +43,9 @@ export async function loginAction(
       const dataUser = await client.user.userControllerMe({
         headers: { Cookie: `auth_token=${token}` },
       });
-      console.log("USER",dataUser.data)
+      console.log("USER", dataUser.data);
       return {
-        user:dataUser.data,
+        user: dataUser.data,
       };
     } else {
       return {
